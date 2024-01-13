@@ -24,8 +24,8 @@
 <meta property="og:description" content="本文转载自 Fluid 官方博客文章，版权归原作者所有。 本文作者：张凯强 原文地址：https:&#x2F;&#x2F;hexo.fluid-dev.com&#x2F;posts&#x2F;fluid-footer-custom&#x2F;  Fluid 1.8.4 版本支持自定义页脚内容了，群友常改的网站运行时长，这次无需再修改源代码。 只需要在主题配置中的 footer: content 添加： 1234567891011footer:">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.gumengyo.top/%E9%A1%B5%E8%84%9A%E5%A2%9E%E5%8A%A0%E8%BF%90%E8%A1%8C%E6%97%B6%E9%95%BFcover.png">
-<meta property="article:published_time" content="2023-03-04T05:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-04T15:32:12.889Z">
+<meta property="article:published_time" content="2023-03-04T13:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-13T08:07:42.966Z">
 <meta property="article:author" content="顾梦">
 <meta property="article:tag" content="Fluid">
 <meta name="twitter:card" content="summary_large_image">
@@ -113,8 +113,7 @@
 </head>
 
 
-<body><!-- hexo injector body_begin start --><div id="web_bg"></div>
-  <!-- hexo injector body_begin end -->
+<body>
   
 
   <header>
@@ -446,13 +445,12 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <!-- SEO header -->
-            <h1 style="display: none">Fluid 页脚增加网站运行时长</h1>
+            <h1 id="seo-header">Fluid 页脚增加网站运行时长</h1>
             
-              <p class="note note-info">
+              <p id="updated-time" class="note note-info" style="">
                 
                   
-                    本文最后更新于 2024年1月4日 晚上
+                    本文最后更新于 2024年1月13日 早上
                   
                 
               </p>
@@ -477,29 +475,6 @@
               </div>
             
             <hr/>
-			
-			<!-- 添加打赏模块 -->
-			<div class="reward-container">
-				 
-					<button id="rewardBtn" class="reward-btn">
-						 
-							❤ 打赏
-						  	
-					</button>
-					<p class="tea">“觉得不错的话，给点打赏吧 ୧(๑•̀⌄•́๑)૭ ”</p>
-					<div id="rewardImgContainer" class="reward-img-container">
-					<div class="singleImgContainer">
-						<img id="wechatImg" class="reward-img" src="/img/wechatpay.jpg" srcset="/img/loading.gif" lazyload alt="微信二维码">
-						<p class="wechatPay">微信支付</p>
-					</div>
-					<div class="singleImgContainer">
-						<img id="alipayImg" class="reward-img" src="/img/alipay.png" srcset="/img/loading.gif" lazyload alt="支付宝二维码">
-						<p class="aliPay">支付宝支付</p>
-					</div>
-					</div>
-				
-			</div>
-			
             <div>
               <div class="post-metas my-3">
   
@@ -528,7 +503,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Fluid/">#Fluid</a>
+        <a href="/tags/Fluid/" class="print-no-link">#Fluid</a>
       
     </div>
   
@@ -559,7 +534,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2024年1月4日</div>
+          <div>2024年1月13日</div>
         </div>
       
       
@@ -569,19 +544,19 @@
             
               
               
-                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
                   <span class="hint--top hint--rounded" aria-label="BY - 署名">
                     <i class="iconfont icon-by"></i>
                   </span>
                 </a>
               
-                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
                   <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
                     <i class="iconfont icon-nc"></i>
                   </span>
                 </a>
               
-                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
                   <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
                     <i class="iconfont icon-sa"></i>
                   </span>
@@ -939,22 +914,7 @@
   <noscript>
     <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
   </noscript>
-<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script>
-  <link defer rel="stylesheet" href="/styles/backgroundize.css" />
-      
-  <!-- 
-    <script 
-	async 
-	defer
-	src="http://cdn.jishuqin.cn/blog/random-string.js" 
-	data-website-id="bb749527-20c3-43b4-86bf-38105b1ebfc6"
-	data-host-url="http://47.115.210.241:3000"
-	data-domains="http://blog.jishuqin.cn/"
-	>
-    </script>
-  -->
-
-  
+<!-- hexo injector body_end start -->
   <script data-pjax src="https://cdn.gumengyo.top/blog/hexo_githubcalendar.js"></script>
   <script data-pjax>
         function GithubCalendarConfig(){
