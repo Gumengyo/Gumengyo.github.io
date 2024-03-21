@@ -4,19 +4,6 @@
   
   
   <entry>
-    <title>test_0321</title>
-    <link href="/2024/03/21/test_0321/"/>
-    <url>/2024/03/21/test_0321/</url>
-    
-    <content type="html"><![CDATA[<h3 id="加速-purge">加速 purge</h3><p><strong>涉及如下几个参数，测试中找一个比较合适的值。</strong></p><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">innodb<span class="hljs-emphasis">_purge_threads</span><br><span class="hljs-emphasis">innodb_purge_rseg_truncate_frequency</span><br><span class="hljs-emphasis">innodb_max_purge_lag</span><br><span class="hljs-emphasis">innodb_purge_batch_</span>size<br></code></pre></td></tr></table></figure><h3 id="如何发现-purge-滞后">如何发现 purge 滞后</h3><p>发现这类问题的方式 show engine innodb status 的输出中 TRANSACTIONS 这一节里面有一个 History list length 的指标用来描述 purge 现在滞后多少；按文档的说明这个值 小于几千 (小于 1w ) 看了下我们这里的值就比较大了。 我查了下我们的实例上的这个值差不多 28亿 了。</p><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><br><span class="hljs-code">------------</span><br><span class="hljs-code">TRANSACTIONS</span><br><span class="hljs-code">------------</span><br>Trx id counter 136841957143<br>Purge done for trx&#x27;s n:o &lt; 131160845103 undo n:o &lt; 0 state: running<br>History list length 2840506211<br>LIST OF TRANSACTIONS FOR EACH SESSION:<br></code></pre></td></tr></table></figure><table><thead><tr><th>11</th><th>11</th><th>11</th></tr></thead><tbody><tr><td>22</td><td>22</td><td>22</td></tr><tr><td>44</td><td>33</td><td>33</td></tr></tbody></table>]]></content>
-    
-    
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>Vercel 搭建Qexo-Hexo后台</title>
     <link href="/2024/01/20/Vercel%20%E6%90%AD%E5%BB%BAQexo-Hexo%E5%90%8E%E5%8F%B0/"/>
     <url>/2024/01/20/Vercel%20%E6%90%AD%E5%BB%BAQexo-Hexo%E5%90%8E%E5%8F%B0/</url>
