@@ -16,16 +16,16 @@
   <meta name="author" content="顾梦">
   <meta name="keywords" content="">
   
-    <meta name="description" content="一、前言 WebDAV 是一种基于 HTTP 协议的文件传输协议，如今有许多第三方文件管理器、视频播放器等产品都支持通过 WebDAV 协议访问 Cloudreve 中的文件，你可以借此实现跨平台的文件共享与同步。 二、添加权限 登录网盘进入管理面板，点击左侧用户组，点击编辑按钮为对应用户组开启WebDAV协议连接网盘功能。  勾选WebDAV选项  返回主页，点击左侧连接，创建一个WebDAV账">
+    <meta name="description" content="这篇文章介绍了如何使用WebDAV协议访问Cloudreve中的文件，实现跨平台的文件共享与同步。首先，需要登录网盘管理面板，并为用户组开启WebDAV协议连接功能。然后，在Windows端需要打开注册表，找到WebClient的路径，并将BasicAuthLevel的值改为2，以同时支持http和https传输协议。还需要删除FileSizeLimitInBytes，以开放下载大小。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Cloudreve映射WebDav">
 <meta property="og:url" content="https://blog.jishuqin.cn/2023/03/04/Cloudreve%E6%98%A0%E5%B0%84WebDav/index.html">
 <meta property="og:site_name" content="Gumeng’s blog">
-<meta property="og:description" content="一、前言 WebDAV 是一种基于 HTTP 协议的文件传输协议，如今有许多第三方文件管理器、视频播放器等产品都支持通过 WebDAV 协议访问 Cloudreve 中的文件，你可以借此实现跨平台的文件共享与同步。 二、添加权限 登录网盘进入管理面板，点击左侧用户组，点击编辑按钮为对应用户组开启WebDAV协议连接网盘功能。  勾选WebDAV选项  返回主页，点击左侧连接，创建一个WebDAV账">
+<meta property="og:description" content="这篇文章介绍了如何使用WebDAV协议访问Cloudreve中的文件，实现跨平台的文件共享与同步。首先，需要登录网盘管理面板，并为用户组开启WebDAV协议连接功能。然后，在Windows端需要打开注册表，找到WebClient的路径，并将BasicAuthLevel的值改为2，以同时支持http和https传输协议。还需要删除FileSizeLimitInBytes，以开放下载大小。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.gumengyo.top/cloudreve.png">
-<meta property="article:published_time" content="2023-03-04T09:57:00.000Z">
-<meta property="article:modified_time" content="2024-03-23T12:44:52.923Z">
+<meta property="article:published_time" content="2023-03-04T01:57:00.000Z">
+<meta property="article:modified_time" content="2024-03-23T13:03:18.583Z">
 <meta property="article:author" content="顾梦">
 <meta property="article:tag" content="Cloudreve">
 <meta name="twitter:card" content="summary_large_image">
@@ -420,8 +420,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-03-04 09:57" pubdate>
-          2023年3月4日 上午
+        <time datetime="2023-03-04 01:57" pubdate>
+          2023年3月4日 凌晨
         </time>
       </span>
     
