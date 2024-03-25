@@ -12,6 +12,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
   <meta name="theme-color" content="#2f4154">
   <meta name="author" content="顾梦">
   <meta name="keywords" content="">
@@ -69,7 +71,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"blog.jishuqin.cn","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"✦","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"hDuFZsFxs7Svak58Cr7BwZUk-gzGzoHsz","app_key":"xsTGLe4v4eXMi7H3I87RBRkL","server_url":"https://hdufzsfx.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"blog.jishuqin.cn","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"✦","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"#"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":true,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["-slim",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":6},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"hDuFZsFxs7Svak58Cr7BwZUk-gzGzoHsz","app_key":"xsTGLe4v4eXMi7H3I87RBRkL","server_url":"https://hdufzsfx.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -383,7 +385,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="友情链接"></span>
+            <span id="subtitle">友情链接</span>
           
         </div>
 
@@ -423,7 +425,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="/img/favicon.png" srcset="/img/loading.gif" lazyload alt="Fluid Blog"
+              <img src="/img/favicon.png" alt="Fluid Blog"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -441,7 +443,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://static.zkqiang.cn/images/20190726002726.JPG-slim" srcset="/img/loading.gif" lazyload alt="zkqiang&#39;s blog"
+              <img src="https://static.zkqiang.cn/images/20190726002726.JPG-slim" alt="zkqiang&#39;s blog"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -459,7 +461,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://img01.anheyu.com/useruploads/90/2023/04/23/6444e85234e51.jpg" srcset="/img/loading.gif" lazyload alt="安知鱼"
+              <img src="https://img01.anheyu.com/useruploads/90/2023/04/23/6444e85234e51.jpg" alt="安知鱼"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -477,7 +479,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://cdn.dusays.com/avatar.png" srcset="/img/loading.gif" lazyload alt="杜老师说"
+              <img src="https://cdn.dusays.com/avatar.png" alt="杜老师说"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -495,7 +497,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://avatars.githubusercontent.com/u/98571056?v=4" srcset="/img/loading.gif" lazyload alt="twintea&#39;s blog🐣"
+              <img src="https://avatars.githubusercontent.com/u/98571056?v=4" alt="twintea&#39;s blog🐣"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -513,7 +515,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://blog.dabing.cool/images/avatar.jpg" srcset="/img/loading.gif" lazyload alt="Dabing"
+              <img src="https://blog.dabing.cool/images/avatar.jpg" alt="Dabing"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -531,7 +533,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://cdn.jsdelivr.net/gh/ciraos/ciraos-static@main/img/avatar1.webp" srcset="/img/loading.gif" lazyload alt="葱苓sama"
+              <img src="https://cdn.jsdelivr.net/gh/ciraos/ciraos-static@main/img/avatar1.webp" alt="葱苓sama"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -549,7 +551,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://daiyu.fun/img/avatar.png" srcset="/img/loading.gif" lazyload alt="呆鱼"
+              <img src="https://daiyu.fun/img/avatar.png" alt="呆鱼"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -567,7 +569,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://image.cpen.top/image/avatar.jpg" srcset="/img/loading.gif" lazyload alt="Mycpen"
+              <img src="https://image.cpen.top/image/avatar.jpg" alt="Mycpen"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -585,7 +587,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://pochacco.top/img/Avatar.gif" srcset="/img/loading.gif" lazyload alt="鹿啵包の小窝"
+              <img src="https://pochacco.top/img/Avatar.gif" alt="鹿啵包の小窝"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -603,7 +605,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://loli.fj.cn/dist/images/avatar.gif" srcset="/img/loading.gif" lazyload alt="绯鞠的博客"
+              <img src="https://loli.fj.cn/dist/images/avatar.gif" alt="绯鞠的博客"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -621,7 +623,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://clouds.totime.cn/2023/02/20230216093653176.jpg" srcset="/img/loading.gif" lazyload alt="小染笔记"
+              <img src="https://clouds.totime.cn/2023/02/20230216093653176.jpg" alt="小染笔记"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -639,7 +641,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://bu.dusays.com/2023/07/10/64abbf448d530.jpg" srcset="/img/loading.gif" lazyload alt="探人间"
+              <img src="https://bu.dusays.com/2023/07/10/64abbf448d530.jpg" alt="探人间"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -657,7 +659,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://s1.ax1x.com/2023/05/26/p9qChjI.jpg" srcset="/img/loading.gif" lazyload alt="爱吃肉的猫"
+              <img src="https://s1.ax1x.com/2023/05/26/p9qChjI.jpg" alt="爱吃肉的猫"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -675,7 +677,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://bu.dusays.com/2022/11/04/636511250b21b.jpg" srcset="/img/loading.gif" lazyload alt="小码同学"
+              <img src="https://bu.dusays.com/2022/11/04/636511250b21b.jpg" alt="小码同学"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -693,7 +695,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://likepoems.com/wp-content/uploads/2021/01/favicon.jpg" srcset="/img/loading.gif" lazyload alt="如诗"
+              <img src="https://likepoems.com/wp-content/uploads/2021/01/favicon.jpg" alt="如诗"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -711,7 +713,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://pic.imgdb.cn/item/6274c7be09475431292fd345.jpg" srcset="/img/loading.gif" lazyload alt="热爱生活"
+              <img src="https://pic.imgdb.cn/item/6274c7be09475431292fd345.jpg" alt="热爱生活"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -729,7 +731,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://img.akimio.top/avatar/akimio.png" srcset="/img/loading.gif" lazyload alt="秋澪Akimio"
+              <img src="https://img.akimio.top/avatar/akimio.png" alt="秋澪Akimio"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -747,7 +749,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://cdn.jsdelivr.net/gh/Revincx/blog-assets@master/images/avatar.jpg" srcset="/img/loading.gif" lazyload alt="Revincx"
+              <img src="https://cdn.jsdelivr.net/gh/Revincx/blog-assets@master/images/avatar.jpg" alt="Revincx"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -765,7 +767,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://bu.dusays.com/2022/02/23/cb173cbdcc7c6.png" srcset="/img/loading.gif" lazyload alt="Colsrch"
+              <img src="https://bu.dusays.com/2022/02/23/cb173cbdcc7c6.png" alt="Colsrch"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -783,7 +785,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://static.pil0txia.com/assets/03_3_600p.webp" srcset="/img/loading.gif" lazyload alt="Pil0tXia-浮笙事记"
+              <img src="https://static.pil0txia.com/assets/03_3_600p.webp" alt="Pil0tXia-浮笙事记"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -801,7 +803,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://api.xrpyq.com/storage/users/files/1/g.webp" srcset="/img/loading.gif" lazyload alt="小朊的朋友圈"
+              <img src="https://api.xrpyq.com/storage/users/files/1/g.webp" alt="小朊的朋友圈"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -819,7 +821,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://pic.imgdb.cn/item/63f16cddf144a010070697c8.jpg" srcset="/img/loading.gif" lazyload alt="GanSer"
+              <img src="https://pic.imgdb.cn/item/63f16cddf144a010070697c8.jpg" alt="GanSer"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -837,7 +839,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://s1.ax1x.com/2023/06/15/pCKwra6.jpg" srcset="/img/loading.gif" lazyload alt="XiYu博客"
+              <img src="https://s1.ax1x.com/2023/06/15/pCKwra6.jpg" alt="XiYu博客"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -855,7 +857,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://tiaq.cn/tx.jpg" srcset="/img/loading.gif" lazyload alt="Peace`Home"
+              <img src="https://tiaq.cn/tx.jpg" alt="Peace`Home"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -873,7 +875,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://q1.qlogo.cn/g?b=qq&amp;nk=990320751&amp;s=5" srcset="/img/loading.gif" lazyload alt="Leonus"
+              <img src="https://q1.qlogo.cn/g?b=qq&amp;nk=990320751&amp;s=5" alt="Leonus"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -891,7 +893,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="http://www.static.mingzib.xyz/blogUploadFile/configImage/5d4cbfe057a649b4b1c7b9a9ea607015.jpg" srcset="/img/loading.gif" lazyload alt="Mhare的个人博客"
+              <img src="http://www.static.mingzib.xyz/blogUploadFile/configImage/5d4cbfe057a649b4b1c7b9a9ea607015.jpg" alt="Mhare的个人博客"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -909,7 +911,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://www.zywvvd.com/image/avatar.png" srcset="/img/loading.gif" lazyload alt="又见苍岚"
+              <img src="https://www.zywvvd.com/image/avatar.png" alt="又见苍岚"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -927,7 +929,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://jiangsihan.cn/logo" srcset="/img/loading.gif" lazyload alt="江咏之的笔记"
+              <img src="https://jiangsihan.cn/logo" alt="江咏之的笔记"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -945,7 +947,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://www.qcqx.cn/img/head.webp" srcset="/img/loading.gif" lazyload alt="轻笑Chuckle"
+              <img src="https://www.qcqx.cn/img/head.webp" alt="轻笑Chuckle"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -963,7 +965,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://cdn1.tianli0.top/gh/linjiangyu2/halo/img/fa.jpg" srcset="/img/loading.gif" lazyload alt="Tianlin_Zz"
+              <img src="https://cdn1.tianli0.top/gh/linjiangyu2/halo/img/fa.jpg" alt="Tianlin_Zz"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -981,7 +983,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://uss.ilovey.live/img/avatar.jpg" srcset="/img/loading.gif" lazyload alt="低调小熊猫"
+              <img src="https://uss.ilovey.live/img/avatar.jpg" alt="低调小熊猫"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -995,29 +997,11 @@
   
     
     <div class="card col-lg-4 col-md-6 col-sm-12">
-      <a href="https://blog.catchyun.com" class="card-body hover-with-bg" target="_blank" rel="noopener">
-        <div class="card-content">
-          
-            <div class="link-avatar my-auto">
-              <img src="https://cdn.catchyun.com/favicon.ico" srcset="/img/loading.gif" lazyload alt="云晓晨CatchWang"
-                   onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
-            </div>
-          
-          <div class="link-text">
-            <div class="link-title">云晓晨CatchWang</div>
-            <div class="link-intro">未来路远 • 勿忘初心</div>
-          </div>
-        </div>
-      </a>
-    </div>
-  
-    
-    <div class="card col-lg-4 col-md-6 col-sm-12">
       <a href="https://lomtom.cn/" class="card-body hover-with-bg" target="_blank" rel="noopener">
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://lomtom.cn/images/avatar.png" srcset="/img/loading.gif" lazyload alt="lomtom"
+              <img src="https://lomtom.cn/images/avatar.png" alt="lomtom"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -1035,7 +1019,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://q1.qlogo.cn/g?b=qq&amp;nk=1176996982&amp;s=100" srcset="/img/loading.gif" lazyload alt="染念"
+              <img src="https://q1.qlogo.cn/g?b=qq&amp;nk=1176996982&amp;s=100" alt="染念"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -1053,7 +1037,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://lanm.love/img/3.ico" srcset="/img/loading.gif" lazyload alt="蓝莓"
+              <img src="https://lanm.love/img/3.ico" alt="蓝莓"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -1071,7 +1055,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://static.luoyuanxiang.top/images/logo/logo.png" srcset="/img/loading.gif" lazyload alt="L"
+              <img src="https://static.luoyuanxiang.top/images/logo/logo.png" alt="L"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -1089,7 +1073,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://q2.qlogo.cn/headimg_dl?dst_uin=2078170660&amp;spec=100" srcset="/img/loading.gif" lazyload alt="Zyx的小窝"
+              <img src="https://q2.qlogo.cn/headimg_dl?dst_uin=2078170660&amp;spec=100" alt="Zyx的小窝"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -1107,7 +1091,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://npm.elemecdn.com/ytblogimg/webp/logo.webp" srcset="/img/loading.gif" lazyload alt="Fgaoxing"
+              <img src="https://npm.elemecdn.com/ytblogimg/webp/logo.webp" alt="Fgaoxing"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -1125,7 +1109,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://pidanxia.ink/wp-content/uploads/2023/09/pidanxia.jpg" srcset="/img/loading.gif" lazyload alt="pidanxia’ s Blog"
+              <img src="https://pidanxia.ink/wp-content/uploads/2023/09/pidanxia.jpg" alt="pidanxia’ s Blog"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -1143,7 +1127,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="http://store-tu.sdn.stvue.com/2022/04/02/6247410a43f6a.jpg" srcset="/img/loading.gif" lazyload alt="芸熙の小屋"
+              <img src="http://store-tu.sdn.stvue.com/2022/04/02/6247410a43f6a.jpg" alt="芸熙の小屋"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -1161,7 +1145,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://pic1.rpgsky.net/imgcn/moepic/2023/10/20/4741a81ec1513092303ac6e24e85c632.jpg" srcset="/img/loading.gif" lazyload alt="竹子"
+              <img src="https://pic1.rpgsky.net/imgcn/moepic/2023/10/20/4741a81ec1513092303ac6e24e85c632.jpg" alt="竹子"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -1179,7 +1163,7 @@
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="https://lingdu.love/favicon.ico" srcset="/img/loading.gif" lazyload alt="〇°"
+              <img src="https://lingdu.love/favicon.ico" alt="〇°"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
@@ -1204,7 +1188,7 @@
 
   
   
-    <article id="comments" lazyload>
+    <article id="comments">
       
   <div id="twikoo"></div>
   <script type="text/javascript">
@@ -1278,7 +1262,7 @@
     <div class="footer-inner">
   
     <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span class="umami--click--Footer-Hexo">Hexo</span></a> <span class="with-love"><img src="https://cdn.gumengyo.top/duck.gif" srcset="/img/loading.gif" lazyload alt="" height="35" style="display:inline-block;vertical-align:middle" data-loaded="true" class="lozaded"> </span> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span class="umami--click--Footer-Fluid">Fluid</span></a> <div style="font-size: 0.85rem"> <span>本站由</span> <span class="with-love"><img src="https://cdn.gumengyo.top//qiniuyun.png" srcset="/img/loading.gif" lazyload alt="" height="35" style="display:inline-block;vertical-align:middle" data-loaded="true" class="lozaded"> </span> <span>提供CDN加速/云存储服务</span> </div> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span class="umami--click--Footer-Hexo">Hexo</span></a> <span class="with-love"><img src="https://cdn.gumengyo.top/duck.gif" alt="" height="35" style="display:inline-block;vertical-align:middle" data-loaded="true" class="lozaded"> </span> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span class="umami--click--Footer-Fluid">Fluid</span></a> <div style="font-size: 0.85rem"> <span>本站由</span> <span class="with-love"><img src="https://cdn.gumengyo.top//qiniuyun.png" alt="" height="35" style="display:inline-block;vertical-align:middle" data-loaded="true" class="lozaded"> </span> <span>提供CDN加速/云存储服务</span> </div> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
     </div>
   
   
@@ -1326,7 +1310,7 @@
         >
           
             <span style="visibility: hidden; width: 0">|</span>
-            <img src="/img/police_beian.png" srcset="/img/loading.gif" lazyload alt="police-icon"/>
+            <img src="/img/police_beian.png" alt="police-icon"/>
           
           <span>粤公网安备44050702001273号</span>
         </a>
@@ -1347,7 +1331,7 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
 
   <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.configure({"showSpinner":true,"trickleSpeed":100})
     NProgress.start()
     window.addEventListener('load', function() {
       NProgress.done();
@@ -1361,26 +1345,11 @@
 <script  src="/js/plugins.js" ></script>
 
 
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
-      
-        typing(text);
-      
-    })(window, document);
-  </script>
-
 
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
+    
   
 
 

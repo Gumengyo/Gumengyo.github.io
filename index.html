@@ -12,6 +12,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
   <meta name="theme-color" content="#2f4154">
   <meta name="author" content="顾梦">
   <meta name="keywords" content="">
@@ -69,7 +71,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"blog.jishuqin.cn","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"✦","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"hDuFZsFxs7Svak58Cr7BwZUk-gzGzoHsz","app_key":"xsTGLe4v4eXMi7H3I87RBRkL","server_url":"https://hdufzsfx.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"blog.jishuqin.cn","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"✦","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"#"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":true,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["-slim",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":6},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"hDuFZsFxs7Svak58Cr7BwZUk-gzGzoHsz","app_key":"xsTGLe4v4eXMi7H3I87RBRkL","server_url":"https://hdufzsfx.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -425,7 +427,7 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2024/01/20/Vercel%20%E6%90%AD%E5%BB%BAQexo-Hexo%E5%90%8E%E5%8F%B0/" target="_self">
-          <img src="https://cdn.gumengyo.top//blog/img/202401210005189.png" srcset="/img/loading.gif" lazyload alt="Vercel 搭建Qexo-Hexo后台">
+          <img src="https://cdn.gumengyo.top//blog/img/202401210005189.png" alt="Vercel 搭建Qexo-Hexo后台">
         </a>
       </div>
     
@@ -473,7 +475,7 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2023/07/09/MySQL-%E9%AB%98%E7%BA%A7/" target="_self">
-          <img src="https://cdn.gumengyo.top//202304192055832.png" srcset="/img/loading.gif" lazyload alt="MySQL-高级">
+          <img src="https://cdn.gumengyo.top//202304192055832.png" alt="MySQL-高级">
         </a>
       </div>
     
@@ -540,7 +542,7 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2023/06/28/%E7%AB%99%E7%82%B9%E7%9B%91%E6%8E%A7-Uptime-kuma/" target="_self">
-          <img src="https://cdn.gumengyo.top//202306281740421.png" srcset="/img/loading.gif" lazyload alt="站点监控-Uptime-kuma">
+          <img src="https://cdn.gumengyo.top//202306281740421.png" alt="站点监控-Uptime-kuma">
         </a>
       </div>
     
@@ -609,7 +611,7 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2023/06/17/%E7%BB%99-Fluid-%E4%B8%BB%E9%A2%98%E5%8D%9A%E5%AE%A2%E5%A2%9E%E5%8A%A0%E6%89%93%E8%B5%8F%E5%8A%9F%E8%83%BD/" target="_self">
-          <img src="https://cdn.gumengyo.top//image-20230618000739725.png" srcset="/img/loading.gif" lazyload alt="给 Fluid 主题博客增加打赏功能">
+          <img src="https://cdn.gumengyo.top//image-20230618000739725.png" alt="给 Fluid 主题博客增加打赏功能">
         </a>
       </div>
     
@@ -678,7 +680,7 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2023/06/11/Github%E9%A6%96%E9%A1%B5%E6%B7%BB%E5%8A%A0%E8%B4%AA%E5%90%83%E8%9B%87%E5%8A%A8%E7%94%BB/" target="_self">
-          <img src="https://cdn.gumengyo.top//202306120013028.png" srcset="/img/loading.gif" lazyload alt="Github首页添加贪吃蛇动画">
+          <img src="https://cdn.gumengyo.top//202306120013028.png" alt="Github首页添加贪吃蛇动画">
         </a>
       </div>
     
@@ -745,7 +747,7 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2023/06/09/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/" target="_self">
-          <img src="https://cdn.gumengyo.top//wallhavenrrodj7.jpg" srcset="/img/loading.gif" lazyload alt="加密算法">
+          <img src="https://cdn.gumengyo.top//wallhavenrrodj7.jpg" alt="加密算法">
         </a>
       </div>
     
@@ -812,7 +814,7 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2023/06/08/%E8%BD%AF%E8%80%83-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%B8%88-%E7%AC%94%E8%AE%B0/" target="_self">
-          <img src="https://cdn.gumengyo.top//wallhavenrrodj7.jpg" srcset="/img/loading.gif" lazyload alt="软考-软件设计师 笔记">
+          <img src="https://cdn.gumengyo.top//wallhavenrrodj7.jpg" alt="软考-软件设计师 笔记">
         </a>
       </div>
     
@@ -879,7 +881,7 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2023/05/20/%E5%A4%A7%E8%AF%9D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%AC%94%E8%AE%B0/" target="_self">
-          <img src="https://cdn.gumengyo.top//202305202024361.png" srcset="/img/loading.gif" lazyload alt="大话设计模式">
+          <img src="https://cdn.gumengyo.top//202305202024361.png" alt="大话设计模式">
         </a>
       </div>
     
@@ -946,7 +948,7 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2023/04/20/Docker-%E9%85%8D%E7%BD%AE-redis-%E9%9B%86%E7%BE%A43%E4%B8%BB3%E4%BB%8E/" target="_self">
-          <img src="https://cdn.gumengyo.top//202304201547698.png" srcset="/img/loading.gif" lazyload alt="Docker 配置 redis 集群3主3从">
+          <img src="https://cdn.gumengyo.top//202304201547698.png" alt="Docker 配置 redis 集群3主3从">
         </a>
       </div>
     
@@ -1015,7 +1017,7 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2023/04/19/Docker-%E5%AE%89%E8%A3%85-mysql-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" target="_self">
-          <img src="https://cdn.gumengyo.top//202304192055832.png" srcset="/img/loading.gif" lazyload alt="Docker 安装 mysql 主从复制">
+          <img src="https://cdn.gumengyo.top//202304192055832.png" alt="Docker 安装 mysql 主从复制">
         </a>
       </div>
     
@@ -1133,7 +1135,7 @@
     <div class="footer-inner">
   
     <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span class="umami--click--Footer-Hexo">Hexo</span></a> <span class="with-love"><img src="https://cdn.gumengyo.top/duck.gif" srcset="/img/loading.gif" lazyload alt="" height="35" style="display:inline-block;vertical-align:middle" data-loaded="true" class="lozaded"> </span> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span class="umami--click--Footer-Fluid">Fluid</span></a> <div style="font-size: 0.85rem"> <span>本站由</span> <span class="with-love"><img src="https://cdn.gumengyo.top//qiniuyun.png" srcset="/img/loading.gif" lazyload alt="" height="35" style="display:inline-block;vertical-align:middle" data-loaded="true" class="lozaded"> </span> <span>提供CDN加速/云存储服务</span> </div> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span class="umami--click--Footer-Hexo">Hexo</span></a> <span class="with-love"><img src="https://cdn.gumengyo.top/duck.gif" alt="" height="35" style="display:inline-block;vertical-align:middle" data-loaded="true" class="lozaded"> </span> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span class="umami--click--Footer-Fluid">Fluid</span></a> <div style="font-size: 0.85rem"> <span>本站由</span> <span class="with-love"><img src="https://cdn.gumengyo.top//qiniuyun.png" alt="" height="35" style="display:inline-block;vertical-align:middle" data-loaded="true" class="lozaded"> </span> <span>提供CDN加速/云存储服务</span> </div> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
     </div>
   
   
@@ -1181,7 +1183,7 @@
         >
           
             <span style="visibility: hidden; width: 0">|</span>
-            <img src="/img/police_beian.png" srcset="/img/loading.gif" lazyload alt="police-icon"/>
+            <img src="/img/police_beian.png" alt="police-icon"/>
           
           <span>粤公网安备44050702001273号</span>
         </a>
@@ -1202,7 +1204,7 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
 
   <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.configure({"showSpinner":true,"trickleSpeed":100})
     NProgress.start()
     window.addEventListener('load', function() {
       NProgress.done();
@@ -1265,7 +1267,7 @@
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
+    
   
 
 
