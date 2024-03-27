@@ -1,0 +1,1118 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://cloud.gumengyo.top/logo.png">
+  <link rel="icon" href="https://cloud.gumengyo.top/logo.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="顾梦">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="安装 mysql 主从复制 1. 新建主服务容器实例 3307 123456docker run -p 3307:3306 --name mysql-master \-v &#x2F;mydata&#x2F;mysql-master&#x2F;log:&#x2F;var&#x2F;log&#x2F;mysql \-v &#x2F;mydata&#x2F;mysql-master&#x2F;data:&#x2F;var&#x2F;lib&#x2F;mysql \-v &#x2F;mydata&#x2F;mysql-master&#x2F;conf">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker 安装 mysql 主从复制">
+<meta property="og:url" content="https://blog.jishuqin.cn/posts/ff001122/index.html">
+<meta property="og:site_name" content="Gumeng’s blog">
+<meta property="og:description" content="安装 mysql 主从复制 1. 新建主服务容器实例 3307 123456docker run -p 3307:3306 --name mysql-master \-v &#x2F;mydata&#x2F;mysql-master&#x2F;log:&#x2F;var&#x2F;log&#x2F;mysql \-v &#x2F;mydata&#x2F;mysql-master&#x2F;data:&#x2F;var&#x2F;lib&#x2F;mysql \-v &#x2F;mydata&#x2F;mysql-master&#x2F;conf">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.gumengyo.top//202304192055832.png">
+<meta property="article:published_time" content="2023-04-19T20:53:00.000Z">
+<meta property="article:modified_time" content="2024-03-27T09:18:00.466Z">
+<meta property="article:author" content="顾梦">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="Mysql">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.gumengyo.top//202304192055832.png">
+  
+  
+  
+  <title>Docker 安装 mysql 主从复制 - Gumeng’s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="//cdn.gumengyo.top/blog/shubiao.css">
+<link rel="stylesheet" href="//cdn.gumengyo.top/blog/APlayer.min.css">
+<link rel="stylesheet" href="/css/twikoo.css">
+<link rel="stylesheet" href="/css/font_ybwaieb31r/iconfont.css">
+<link rel="stylesheet" href="/css/font_mcfotbatm2l/iconfont.css">
+<link rel="stylesheet" href="//cdn1.tianli0.top/gh/zhheo/Post-Abstract-AI@0.8/tianli_gpt.css">
+<link rel="stylesheet" href="/css/reward.css">
+<link rel="stylesheet" href="/css/loading.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.jishuqin.cn","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"✦","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"#"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":true,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["-slim",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":6},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"hDuFZsFxs7Svak58Cr7BwZUk-gzGzoHsz","app_key":"xsTGLe4v4eXMi7H3I87RBRkL","server_url":"https://hdufzsfx.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+
+<!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Gumeng’s blog" type="application/atom+xml">
+</head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div>
+  <script>let tianliGPT_postSelector = '#board .post-content';let tianliGPT_key = '42b2043e99bbe0dba0f8';</script>
+  <!-- hexo injector body_begin end -->
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Gumeng&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+  <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+			<div class = "umami--click--Navigation-Homepage">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+			  </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-th-large"></i>
+                站点
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Mainpage">
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://gumengyo.top">
+                    <i class="iconfont icon-wangzhan"></i>
+                    主站
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Monitor">
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://kuma.gumengyo.top/status/monitor">
+                    <i class="iconfont icon-codeforces"></i>
+                    站点监控
+                  </a>
+				  </div>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                文章
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Archive">
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    归档
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Category">
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    分类
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Tag">
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    标签
+                  </a>
+				  </div>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+			<div class = "umami--click--Navigation-Music">
+              <a class="nav-link" href="/playlist/">
+                <i class="iconfont icon-music"></i>
+                音乐
+              </a>
+			  </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-friends"></i>
+                社交
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Links">
+                  <a class="dropdown-item" href="/friendLlinks/">
+                    <i class="iconfont icon-link-fill"></i>
+                    友链
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Rss">
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://blog.gumengyo.top/atom.xml">
+                    <i class="iconfont icon-rss"></i>
+                    RSS订阅
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Fcircle">
+                  <a class="dropdown-item" href="/fcircle/">
+                    <i class="iconfont icon-users"></i>
+                    朋友圈
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Goto">
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://www.travellings.cn/go.html">
+                    <i class="iconfont icon-busdaba"></i>
+                    开往
+                  </a>
+				  </div>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+			<div class = "umami--click--Navigation-Comment">
+              <a class="nav-link" href="/tellme/">
+                <i class="iconfont icon-comment"></i>
+                留言板
+              </a>
+			  </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-user-fill"></i>
+                个人
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-About">
+                  <a class="dropdown-item" href="/about/">
+                    <i class="iconfont icon-addrcard"></i>
+                    关于
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-BookList">
+                  <a class="dropdown-item" href="/booklist/">
+                    <i class="iconfont icon-book"></i>
+                    读书
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Talks">
+                  <a class="dropdown-item" href="/talks/">
+                    <i class="iconfont icon-wechat2-fill"></i>
+                    说说
+                  </a>
+				  </div>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('http://cdn.gumengyo.top/post.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">Docker 安装 mysql 主从复制</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        顾梦
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-19 20:53" pubdate>
+          2023年4月19日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          26 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- HTML -->
+<div id="site-loader">
+  <div class="loader"></div>
+  <div class="text">正在加载，请稍候...</div>
+</div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem;">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Docker 安装 mysql 主从复制</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2024年3月27日 上午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="安装-mysql-主从复制">安装 mysql 主从复制</h2>
+<h3 id="1-新建主服务容器实例-3307">1. 新建主服务容器实例 3307</h3>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs awk">docker run -p <span class="hljs-number">3307</span>:<span class="hljs-number">3306</span> --name mysql-master \<br>-v <span class="hljs-regexp">/mydata/my</span>sql-master<span class="hljs-regexp">/log:/</span>var<span class="hljs-regexp">/log/my</span>sql \<br>-v <span class="hljs-regexp">/mydata/my</span>sql-master<span class="hljs-regexp">/data:/</span>var<span class="hljs-regexp">/lib/my</span>sql \<br>-v <span class="hljs-regexp">/mydata/my</span>sql-master<span class="hljs-regexp">/conf:/</span>etc/mysql \<br>-e MYSQL_ROOT_PASSWORD=root  \<br>-d mysql:<span class="hljs-number">5.7</span><br></code></pre></td></tr></table></figure>
+<h3 id="2-新建-my-cnf-文件">2. 新建 my.cnf 文件</h3>
+<p>进入/mydata/mysql–master/conf目录下新建 my.cnf，粘贴以下内容</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[mysqld]</span><br><span class="hljs-comment">## 设置server_id，同一局域网中需要唯一</span><br><span class="hljs-attr">server_id</span>=<span class="hljs-number">101</span> <br><span class="hljs-comment">## 指定不需要同步的数据库名称</span><br><span class="hljs-attr">binlog-ignore-db</span>=mysql  <br><span class="hljs-comment">## 开启二进制日志功能</span><br><span class="hljs-attr">log-bin</span>=mall-mysql-bin  <br><span class="hljs-comment">## 设置二进制日志使用内存大小（事务）</span><br><span class="hljs-attr">binlog_cache_size</span>=<span class="hljs-number">1</span>M  <br><span class="hljs-comment">## 设置使用的二进制日志格式（mixed,statement,row）</span><br><span class="hljs-attr">binlog_format</span>=mixed  <br><span class="hljs-comment">## 二进制日志过期清理时间。默认值为0，表示不自动清理。</span><br><span class="hljs-attr">expire_logs_days</span>=<span class="hljs-number">7</span>  <br><span class="hljs-comment">## 跳过主从复制中遇到的所有错误或指定类型的错误，避免slave端复制中断。</span><br><span class="hljs-comment">## 如：1062错误是指一些主键重复，1032错误是因为主从数据库数据不一致</span><br><span class="hljs-attr">slave_skip_errors</span>=<span class="hljs-number">1062</span><br></code></pre></td></tr></table></figure>
+<h3 id="3-修改好配置后重启-master-实例">3. 修改好配置后重启 master 实例</h3>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">docker restart mysql-<span class="hljs-literal">master</span><br></code></pre></td></tr></table></figure>
+<h3 id="4-进入mysql-master-容器">4. 进入mysql-master 容器</h3>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">docker exec -it mysql-<span class="hljs-keyword">master</span> <span class="hljs-title">/bin</span>/bash<br>mysql -uroot -proot<br></code></pre></td></tr></table></figure>
+<h3 id="5-master-容器实例内创建数据同步用户">5. master 容器实例内创建数据同步用户</h3>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">USER</span> <span class="hljs-string">&#x27;slave&#x27;</span>@<span class="hljs-string">&#x27;%&#x27;</span> IDENTIFIED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;123456&#x27;</span>;<br><span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">REPLICATION</span> SLAVE,<span class="hljs-keyword">REPLICATION</span> CLIENT <span class="hljs-keyword">ON</span> *.* <span class="hljs-keyword">TO</span> <span class="hljs-string">&#x27;slave&#x27;</span>@<span class="hljs-string">&#x27;%&#x27;</span>;<br></code></pre></td></tr></table></figure>
+<h3 id="6-查看同步用户权限">6. 查看同步用户权限</h3>
+<p>通过指令&quot;<strong>select user,host from user;</strong>&quot;查看备份账号IP访问权限是否为’%'，通过&quot;<strong>show grants for slave</strong>&quot;查看复制账户是否拥有REPLICATION CLIENT、REPLICATION SLAVE、SUPER、RELOAD权限；</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql">use mysql;<br><br><span class="hljs-keyword">select</span> <span class="hljs-keyword">user</span>,host <span class="hljs-keyword">from</span> <span class="hljs-keyword">user</span>;<br><br><span class="hljs-keyword">show</span> grants <span class="hljs-keyword">for</span> slave;<br></code></pre></td></tr></table></figure>
+<p><img src="https://cdn.gumengyo.top//image-20230416232437814.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>如果没有的话使用命令授权</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">grant</span> <span class="hljs-keyword">REPLICATION</span> CLIENT <span class="hljs-keyword">ON</span> *.* <span class="hljs-keyword">TO</span> slave;<br><span class="hljs-keyword">grant</span> <span class="hljs-keyword">REPLICATION</span> SLAVE <span class="hljs-keyword">ON</span> *.* <span class="hljs-keyword">TO</span> slave;<br><span class="hljs-keyword">grant</span> SUPER <span class="hljs-keyword">ON</span> *.* <span class="hljs-keyword">TO</span> slave;<br><span class="hljs-keyword">grant</span> reload <span class="hljs-keyword">on</span> *.* <span class="hljs-keyword">to</span> slave;<br>FLUSH <span class="hljs-keyword">PRIVILEGES</span>;<br></code></pre></td></tr></table></figure>
+<h3 id="7-新建从服务容器实例-3308">7. 新建从服务容器实例 3308</h3>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs awk">docker run -p <span class="hljs-number">3308</span>:<span class="hljs-number">3306</span> --name mysql-slave \<br>-v <span class="hljs-regexp">/mydata/my</span>sql-slave<span class="hljs-regexp">/log:/</span>var<span class="hljs-regexp">/log/my</span>sql \<br>-v <span class="hljs-regexp">/mydata/my</span>sql-slave<span class="hljs-regexp">/data:/</span>var<span class="hljs-regexp">/lib/my</span>sql \<br>-v <span class="hljs-regexp">/mydata/my</span>sql-slave<span class="hljs-regexp">/conf:/</span>etc/mysql \<br>-e MYSQL_ROOT_PASSWORD=root  \<br>-d mysql:<span class="hljs-number">5.7</span><br></code></pre></td></tr></table></figure>
+<h3 id="8-新建-my-cnf-文件">8. 新建 my.cnf 文件</h3>
+<p>进入/mydata/mysql-slave/conf目录下新建my.cnf</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[mysqld]</span><br><span class="hljs-comment">## 设置server_id，同一局域网中需要唯一</span><br><span class="hljs-attr">server_id</span>=<span class="hljs-number">102</span><br><span class="hljs-comment">## 指定不需要同步的数据库名称</span><br><span class="hljs-attr">binlog-ignore-db</span>=mysql  <br><span class="hljs-comment">## 开启二进制日志功能，以备Slave作为其它数据库实例的Master时使用</span><br><span class="hljs-attr">log-bin</span>=mall-mysql-slave1-bin  <br><span class="hljs-comment">## 设置二进制日志使用内存大小（事务）</span><br><span class="hljs-attr">binlog_cache_size</span>=<span class="hljs-number">1</span>M  <br><span class="hljs-comment">## 设置使用的二进制日志格式（mixed,statement,row）</span><br><span class="hljs-attr">binlog_format</span>=mixed  <br><span class="hljs-comment">## 二进制日志过期清理时间。默认值为0，表示不自动清理。</span><br><span class="hljs-attr">expire_logs_days</span>=<span class="hljs-number">7</span>  <br><span class="hljs-comment">## 跳过主从复制中遇到的所有错误或指定类型的错误，避免slave端复制中断。</span><br><span class="hljs-comment">## 如：1062错误是指一些主键重复，1032错误是因为主从数据库数据不一致</span><br><span class="hljs-attr">slave_skip_errors</span>=<span class="hljs-number">1062</span>  <br><span class="hljs-comment">## relay_log配置中继日志</span><br><span class="hljs-attr">relay_log</span>=mall-mysql-relay-bin  <br><span class="hljs-comment">## log_slave_updates表示slave将复制事件写进自己的二进制日志</span><br><span class="hljs-attr">log_slave_updates</span>=<span class="hljs-number">1</span>  <br><span class="hljs-comment">## slave设置为只读（具有super权限的用户除外）</span><br><span class="hljs-attr">read_only</span>=<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+<h3 id="9-修改完配置后重启slave实例">9. 修改完配置后重启slave实例</h3>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">docker restart mysql-<span class="hljs-literal">slave</span><br></code></pre></td></tr></table></figure>
+<h3 id="10-在主数据库中查看主从同步状态">10. 在主数据库中查看主从同步状态</h3>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">show <span class="hljs-keyword">master</span> <span class="hljs-title">status</span>;<br></code></pre></td></tr></table></figure>
+<p><img src="https://cdn.gumengyo.top//image-20230416233143501.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<h3 id="11-进入mysql–slave容器">11. 进入mysql–slave容器</h3>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">docker exec -it mysql-slave <span class="hljs-regexp">/bin/</span>bash<br><br>mysql -uroot -proot<br></code></pre></td></tr></table></figure>
+<h3 id="12-在从数据库中配置主从复制">12. 在从数据库中配置主从复制</h3>
+<p class="note note-warning">注意开放端口，或者关闭防火墙，否则从机连接不上主机。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">change master <span class="hljs-keyword">to</span> <span class="hljs-attribute">master_host</span>=<span class="hljs-string">&#x27;宿主机ip&#x27;</span>, <span class="hljs-attribute">master_user</span>=<span class="hljs-string">&#x27;slave&#x27;</span>, <span class="hljs-attribute">master_password</span>=<span class="hljs-string">&#x27;123456&#x27;</span>, <span class="hljs-attribute">master_port</span>=3307, <span class="hljs-attribute">master_log_file</span>=<span class="hljs-string">&#x27;mall-mysql-bin.000001&#x27;</span>, <span class="hljs-attribute">master_log_pos</span>=617, <span class="hljs-attribute">master_connect_retry</span>=30;<br></code></pre></td></tr></table></figure>
+<p>参数说明：</p>
+<ul>
+<li>master_host：主数据库的IP地址；</li>
+<li>master_port：主数据库的运行端口；</li>
+<li>master_user：在主数据库创建的用于同步数据的用户账号；</li>
+<li>master_password：在主数据库创建的用于同步数据的用户密码；</li>
+<li>master_log_file：指定从数据库要复制数据的日志文件，通过查看主数据的状态，获取File参数；</li>
+<li>master_log_pos：指定从数据库从哪个位置开始复制数据，通过查看主数据的状态，获取Position参数；</li>
+<li>master_connect_retry：连接失败重试的时间间隔，单位为秒。</li>
+</ul>
+<h3 id="13-在从数据库中开启主从同步">13. 在从数据库中开启主从同步</h3>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh"><span class="hljs-literal">start</span> <span class="hljs-literal">slave</span>;<br></code></pre></td></tr></table></figure>
+<h3 id="14-查看从数据库主从同步状态">14. 查看从数据库主从同步状态</h3>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs maxima"><span class="hljs-built_in">show</span> slave <span class="hljs-built_in">status</span> \G;<br></code></pre></td></tr></table></figure>
+<p><img src="https://cdn.gumengyo.top//image-20230416233720733.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p><code>Slave_IO_Running</code>和<code>Slave_SQL_Running</code>状态为Yes则配置成功。</p>
+<h3 id="15-主从复制测试">15. 主从复制测试</h3>
+<p>主机新建库-使用库-新建表-插入数据</p>
+<p><img src="https://cdn.gumengyo.top//image-20230416234054073.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>从机使用库-查看记录</p>
+<p><img src="https://cdn.gumengyo.top//image-20230416234203024.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p class="note note-success">主机写入数据，从机能查询到数据，则说明主从复制搭建成功~👌</p>
+                
+              </div>
+            
+            <hr/>
+			
+			<!-- 添加打赏模块 -->
+			<div class="reward-container">
+				 
+					<button id="rewardBtn" class="reward-btn">
+						 
+							❤ 打赏
+						  	
+					</button>
+					<p class="tea">“觉得不错的话，给点打赏吧 ୧(๑•̀⌄•́๑)૭ ”</p>
+					<div id="rewardImgContainer" class="reward-img-container">
+					<div class="singleImgContainer">
+						<img id="wechatImg" class="reward-img" src="/img/wechatpay.jpg" alt="微信二维码">
+						<p class="wechatPay">微信支付</p>
+					</div>
+					<div class="singleImgContainer">
+						<img id="alipayImg" class="reward-img" src="/img/alipay.png" alt="支付宝二维码">
+						<p class="aliPay">支付宝支付</p>
+					</div>
+					</div>
+				
+			</div>
+			
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE/" class="category-chain-item">服务配置</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Docker/">#Docker</a>
+      
+        <a href="/tags/Mysql/">#Mysql</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Docker 安装 mysql 主从复制</div>
+      <div>https://blog.jishuqin.cn/posts/ff001122/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>顾梦</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月19日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2024年3月27日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/dcba4321/" title="Docker 配置 redis 集群3主3从">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Docker 配置 redis 集群3主3从</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/3f5a7c9b/" title="Docker 基础篇笔记">
+                        <span class="hidden-mobile">Docker 基础篇笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <div id="twikoo"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/twikoo/1.6.8/twikoo.all.min.js', function() {
+        var options = Object.assign(
+          {"envId":"https://twikoo.gumengyo.top/","region":"ap-shanghai","path":"window.location.pathname"},
+          {
+            el: '#twikoo',
+            path: 'window.location.pathname',
+            onCommentLoaded: function() {
+              var imgSelector = '#twikoo .tk-content img:not(.tk-owo-emotion)';
+              Fluid.plugins.imageCaption(imgSelector);
+              Fluid.plugins.fancyBox(imgSelector);
+            }
+          }
+        )
+        twikoo.init(options)
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span class="umami--click--Footer-Hexo">Hexo</span></a> <span class="with-love"><img src="https://cdn.gumengyo.top/duck.gif" alt="" height="35" style="display:inline-block;vertical-align:middle" data-loaded="true" class="lozaded"> </span> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span class="umami--click--Footer-Fluid">Fluid</span></a> <div style="font-size: 0.85rem"> <span>本站由</span> <span class="with-love"><img src="https://cdn.gumengyo.top//qiniuyun.png" alt="" height="35" style="display:inline-block;vertical-align:middle" data-loaded="true" class="lozaded"> </span> <span>提供CDN加速/云存储服务</span> </div> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      粤ICP备2024161578号-1
+    </a>
+  </span>
+  
+    
+      <span>
+        <a
+          href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44050702001273"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="/img/police_beian.png" alt="police-icon"/>
+          
+          <span>粤公网安备44050702001273号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":true,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.gumengyo.top/blog/APlayer.min.js"></script>
+<script src="//cdn.gumengyo.top/blog/Meting.min.js"></script>
+<script src="//cdn.gumengyo.top/blog/wow.min.js"></script>
+<script src="//cdn1.tianli0.top/gh/zhheo/Post-Abstract-AI@0.8/tianli_gpt.js"></script>
+<script src="/js/wow_init.js"></script>
+<script src="/js/reward.js"></script>
+<script src="/js/loading.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script>
+  <link defer rel="stylesheet" href="/styles/backgroundize.css" />
+
+  <!-- 
+    <script 
+	async 
+	defer
+	src="http://cdn.jishuqin.cn/blog/random-string.js" 
+	data-website-id="bb749527-20c3-43b4-86bf-38105b1ebfc6"
+	data-host-url="http://47.115.210.241:3000"
+	data-domains="http://blog.jishuqin.cn/"
+	>
+    </script>
+  -->
+
+  
+  <script data-pjax src="https://cdn.gumengyo.top/blog/hexo_githubcalendar.js"></script>
+  <script data-pjax>
+        function GithubCalendarConfig(){
+            var git_githubapiurl ="https://gitcalendar.gumengyo.top/api/githubcalendar/api?gumengyo";
+            var git_color =['#ebedf0', '#fdcdec', '#fc9bd9', '#fa6ac5', '#f838b2', '#f5089f', '#c4067e', '#92055e', '#540336', '#48022f', '#30021f'];
+            var git_user ="gumengyo";
+            var parent_div_git = document.getElementById('recent-posts');
+            var git_div_html = '<div class="recent-post-item" style="width:100%;height:auto;padding:10px;"><div id="github_loading" style="width:10%;height:100%;margin:0 auto;display: block"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 50 50" style="enable-background:new 0 0 50 50" xml:space="preserve"><path fill="#d0d0d0" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" transform="rotate(275.098 25 25)"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animateTransform></path></svg></div><div id="github_container"></div></div>';
+            if(parent_div_git && location.pathname =='/blog/about/'){
+                console.log('已挂载github calendar')
+                // parent_div_git.innerHTML=git_div_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",git_div_html) // 有报错，但不影响使用(支持pjax跳转)
+            };
+            GithubCalendar(git_githubapiurl,git_color,git_user)
+        }
+        if(document.getElementById('recent-posts')){
+            GithubCalendarConfig()
+        }
+    </script>
+    <style>#github_container{min-height:280px}@media screen and (max-width:650px) {#github_container{background-image:;min-height:0px}}</style>
+    <style></style><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '1s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '2');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --></body>
+</html>
