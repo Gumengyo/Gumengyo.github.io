@@ -1,0 +1,1250 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://cloud.gumengyo.top/logo.png">
+  <link rel="icon" href="https://cloud.gumengyo.top/logo.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="顾梦">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Redis数据结构及常见命令 1.数据结构 Redis是一个key-value的数据库，key一般是String类型，不过value的类型多种多样：  官网各种命令查询 https:&#x2F;&#x2F;redis.io&#x2F;commands ，也可以使用help命令来帮助查看命令 2.通用命令    命令名 作用     keys* 查看当前库所有的key   exists key 判断某个key是否存在   typ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis数据结构及常见命令">
+<meta property="og:url" content="https://blog.jishuqin.cn/posts/fa9b8c7d/index.html">
+<meta property="og:site_name" content="Gumeng’s blog">
+<meta property="og:description" content="Redis数据结构及常见命令 1.数据结构 Redis是一个key-value的数据库，key一般是String类型，不过value的类型多种多样：  官网各种命令查询 https:&#x2F;&#x2F;redis.io&#x2F;commands ，也可以使用help命令来帮助查看命令 2.通用命令    命令名 作用     keys* 查看当前库所有的key   exists key 判断某个key是否存在   typ">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.gumengyo.top//lk956kjc.png">
+<meta property="article:published_time" content="2023-04-07T00:55:17.000Z">
+<meta property="article:modified_time" content="2024-03-27T09:03:02.912Z">
+<meta property="article:author" content="顾梦">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.gumengyo.top//lk956kjc.png">
+  
+  
+  
+  <title>Redis数据结构及常见命令 - Gumeng’s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="//cdn.gumengyo.top/blog/shubiao.css">
+<link rel="stylesheet" href="//cdn.gumengyo.top/blog/APlayer.min.css">
+<link rel="stylesheet" href="/css/twikoo.css">
+<link rel="stylesheet" href="/css/font_ybwaieb31r/iconfont.css">
+<link rel="stylesheet" href="/css/font_mcfotbatm2l/iconfont.css">
+<link rel="stylesheet" href="//cdn1.tianli0.top/gh/zhheo/Post-Abstract-AI@0.8/tianli_gpt.css">
+<link rel="stylesheet" href="/css/reward.css">
+<link rel="stylesheet" href="/css/loading.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.jishuqin.cn","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"✦","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"#"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":true,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["-slim",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":6},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"hDuFZsFxs7Svak58Cr7BwZUk-gzGzoHsz","app_key":"xsTGLe4v4eXMi7H3I87RBRkL","server_url":"https://hdufzsfx.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+
+<!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Gumeng’s blog" type="application/atom+xml">
+</head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div>
+  <script>let tianliGPT_postSelector = '#board .post-content';let tianliGPT_key = '42b2043e99bbe0dba0f8';</script>
+  <!-- hexo injector body_begin end -->
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Gumeng&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+  <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+			<div class = "umami--click--Navigation-Homepage">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+			  </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-th-large"></i>
+                站点
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Mainpage">
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://gumengyo.top">
+                    <i class="iconfont icon-wangzhan"></i>
+                    主站
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Mainpage">
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://bl.gumengyo.top">
+                    <i class="iconfont icon-codepen-fill"></i>
+                    博客镜像站1
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Mainpage">
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://gumengyo.github.io">
+                    <i class="iconfont icon-codepen-fill"></i>
+                    博客镜像站2
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Monitor">
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://kuma.gumengyo.top/status/monitor">
+                    <i class="iconfont icon-codeforces"></i>
+                    站点监控
+                  </a>
+				  </div>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                文章
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Archive">
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    归档
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Category">
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    分类
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Tag">
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    标签
+                  </a>
+				  </div>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+			<div class = "umami--click--Navigation-Music">
+              <a class="nav-link" href="/playlist/">
+                <i class="iconfont icon-music"></i>
+                音乐
+              </a>
+			  </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-friends"></i>
+                社交
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Links">
+                  <a class="dropdown-item" href="/friendLlinks/">
+                    <i class="iconfont icon-link-fill"></i>
+                    友链
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Rss">
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://blog.gumengyo.top/atom.xml">
+                    <i class="iconfont icon-rss"></i>
+                    RSS订阅
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Fcircle">
+                  <a class="dropdown-item" href="/fcircle/">
+                    <i class="iconfont icon-users"></i>
+                    朋友圈
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Goto">
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://www.travellings.cn/go.html">
+                    <i class="iconfont icon-busdaba"></i>
+                    开往
+                  </a>
+				  </div>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+			<div class = "umami--click--Navigation-Comment">
+              <a class="nav-link" href="/tellme/">
+                <i class="iconfont icon-comment"></i>
+                留言板
+              </a>
+			  </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-user-fill"></i>
+                个人
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-About">
+                  <a class="dropdown-item" href="/about/">
+                    <i class="iconfont icon-addrcard"></i>
+                    关于
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Cloudreve">
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://cloudreve.gumengyo.top">
+                    <i class="iconfont icon-briefcase"></i>
+                    网盘
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-BookList">
+                  <a class="dropdown-item" href="/booklist/">
+                    <i class="iconfont icon-book"></i>
+                    读书
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Talks">
+                  <a class="dropdown-item" href="/talks/">
+                    <i class="iconfont icon-wechat2-fill"></i>
+                    说说
+                  </a>
+				  </div>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('http://cdn.gumengyo.top/post.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">Redis数据结构及常见命令</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        顾梦
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-07 08:55" pubdate>
+          2023年4月7日 早上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          23 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- HTML -->
+<div id="site-loader">
+  <div class="loader"></div>
+  <div class="text">正在加载，请稍候...</div>
+</div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem;">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Redis数据结构及常见命令</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2024年3月27日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="Redis数据结构及常见命令">Redis数据结构及常见命令</h2>
+<h3 id="1-数据结构">1.数据结构</h3>
+<p>Redis是一个key-value的数据库，key一般是String类型，不过value的类型多种多样：</p>
+<p><img src="https://cdn.gumengyo.top//202304062339082.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>官网各种命令查询 <a target="_blank" rel="noopener" href="https://redis.io/commands">https://redis.io/commands</a> ，也可以使用<code>help</code>命令来帮助查看命令</p>
+<h3 id="2-通用命令">2.通用命令</h3>
+<table>
+<thead>
+<tr>
+<th>命令名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>keys*</code></td>
+<td>查看当前库所有的key</td>
+</tr>
+<tr>
+<td><code>exists key</code></td>
+<td>判断某个key是否存在</td>
+</tr>
+<tr>
+<td><code>type key</code></td>
+<td>查看你的key是什么类型</td>
+</tr>
+<tr>
+<td><code>del key</code></td>
+<td>删除指定的key数据</td>
+</tr>
+<tr>
+<td><code>unlink key</code></td>
+<td>非阻塞删除，仅仅将keyS从keyspace元数据中删除，<br>真正的删除会在后续异步中操作。</td>
+</tr>
+<tr>
+<td><code>ttl key</code></td>
+<td>查看还有多少秒过期，-1表示永不过期，-2表示已过期</td>
+</tr>
+<tr>
+<td><code>expire key 秒钟</code></td>
+<td>为给定的key设置过期时间</td>
+</tr>
+<tr>
+<td><code>move key dbindex [0-15]</code></td>
+<td>将当前数据库的key移动到给定的数据库db当中</td>
+</tr>
+<tr>
+<td><code>select dbindex</code></td>
+<td>切换数据库[0-15]，默认为0</td>
+</tr>
+<tr>
+<td><code>dbsize</code></td>
+<td>查看当前数据库key的数量</td>
+</tr>
+<tr>
+<td><span class="label label-danger">flushdb</span></td>
+<td>清空当前库</td>
+</tr>
+<tr>
+<td><span class="label label-danger">flushall</span></td>
+<td>通杀全部库</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-String命令">3.String命令</h3>
+<p class="note note-primary">String类型，也就是字符串类型，是Redis中最简单的存储类型。</p>
+<p>String的常见命令有：</p>
+<ul>
+<li><code>SET</code>：添加或者修改已经存在的一个String类型的键值对</li>
+<li><code>GET</code>：根据key获取String类型的value</li>
+<li><code>MSET</code>：批量添加多个String类型的键值对</li>
+<li><code>MGET</code>：根据多个key获取多个String类型的value</li>
+<li><code>INCR</code>：让一个整型的key自增1</li>
+<li><code>INCRBY</code>:让一个整型的key自增并指定步长，例如：incrby num 2 让num值自增2</li>
+<li><code>INCRBYFLOAT</code>：让一个浮点类型的数字自增并指定步长</li>
+<li><code>SETNX</code>：添加一个String类型的键值对，前提是这个key不存在，否则不执行</li>
+<li><code>SETEX</code>：添加一个String类型的键值对，并且指定有效期</li>
+</ul>
+<p><strong>贴心小提示</strong>：以上命令除了INCRBYFLOAT 都是常用命令</p>
+<h3 id="4-Hash命令">4.Hash命令</h3>
+<p class="note note-primary">Hash类型，也叫散列，其value是一个无序字典，类似于Java中的HashMap结构。</p>
+<p>String结构是将对象序列化为JSON字符串后存储，当需要修改对象某个字段时很不方便：</p>
+<p><img src="https://cdn.gumengyo.top//1652941995945.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>使用Hash结构可以将对象中的每个字段独立存储，可以针对单个字段做CRUD：</p>
+<p><img src="https://cdn.gumengyo.top//1652942027719.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p><strong>Hash类型的常见命令</strong></p>
+<ul>
+<li>
+<p><code>HSET key field value</code>：添加或者修改hash类型key的field的值</p>
+</li>
+<li>
+<p><code>HGET key field</code>：获取一个hash类型key的field的值</p>
+</li>
+<li>
+<p><code>HMSET</code>：批量添加多个hash类型key的field的值</p>
+</li>
+<li>
+<p><code>HMGET</code>：批量获取多个hash类型key的field的值</p>
+</li>
+<li>
+<p><code>HGETALL</code>：获取一个hash类型的key中的所有的field和value</p>
+</li>
+<li>
+<p><code>HKEYS</code>：获取一个hash类型的key中的所有的field</p>
+</li>
+<li>
+<p><code>HINCRBY</code>：让一个hash类型key的字段值自增并指定步长</p>
+</li>
+<li>
+<p><code>HSETNX</code>：添加一个hash类型的key的field值，前提是这个field不存在，否则不执行</p>
+</li>
+</ul>
+<p><strong>贴心小提示</strong>：哈希结构也是我们以后实际开发中常用的命令哟</p>
+<h3 id="5-List命令">5.List命令</h3>
+<p class="note note-primary">Redis中的List类型与Java中的LinkedList类似，可以看做是一个双向链表结构。既可以支持正向检索和也可以支持反向检索。</p>
+<p>特征也与LinkedList类似：</p>
+<ul>
+<li>有序</li>
+<li>元素可以重复</li>
+<li>插入和删除快</li>
+<li>查询速度一般</li>
+</ul>
+<p>常用来存储一个有序数据，例如：朋友圈点赞列表，评论列表等。</p>
+<p><strong>List的常见命令有：</strong></p>
+<ul>
+<li><code>LPUSH key element ... </code>：向列表左侧插入一个或多个元素</li>
+<li><code>LPOP key</code>：移除并返回列表左侧的第一个元素，没有则返回nil</li>
+<li><code>RPUSH key element ...</code>：向列表右侧插入一个或多个元素</li>
+<li><code>RPOP key</code>：移除并返回列表右侧的第一个元素</li>
+<li><code>LRANGE key star end</code>：返回一段角标范围内的所有元素</li>
+<li><code>BLPOP和BRPOP</code>：与LPOP和RPOP类似，只不过在没有元素时等待指定时间，而不是直接返回nil</li>
+</ul>
+<p><img src="https://cdn.gumengyo.top//1652943604992.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<h3 id="6-Set命令">6.Set命令</h3>
+<p class="note note-primary">Redis的Set结构与Java中的HashSet类似，可以看做是一个value为null的HashMap。</p>
+<p>因为也是一个hash表，因此具备与HashSet类似的特征：</p>
+<ul>
+<li>无序</li>
+<li>元素不可重复</li>
+<li>查找快</li>
+<li>支持交集.并集.差集等功能</li>
+</ul>
+<p><strong>Set类型的常见命令</strong></p>
+<ul>
+<li><code>SADD key member ... </code>：向set中添加一个或多个元素</li>
+<li><code>SREM key member ...</code> : 移除set中的指定元素</li>
+<li><code>SCARD key</code>： 返回set中元素的个数</li>
+<li><code>SISMEMBER key member</code>：判断一个元素是否存在于set中</li>
+<li><code>SMEMBERS</code>：获取set中的所有元素</li>
+<li><code>SINTER key1 key2 ...</code> ：求key1与key2的交集</li>
+<li><code>SDIFF key1 key2 ...</code> ：求key1与key2的差集</li>
+<li><code>SUNION key1 key2 ...</code>：求key1和key2的并集</li>
+</ul>
+<h3 id="7-SortedSet类型">7.SortedSet类型</h3>
+<p class="note note-primary">Redis的SortedSet是一个可排序的set集合，与Java中的TreeSet有些类似，但底层数据结构却差别很大。SortedSet中的每一个元素都带有一个score属性，可以基于score属性对元素排序，底层的实现是一个跳表（SkipList）加 hash表。</p>
+<p>SortedSet具备下列特性：</p>
+<ul>
+<li>可排序</li>
+<li>元素不重复</li>
+<li>查询速度快</li>
+</ul>
+<p>因为SortedSet的可排序特性，经常被用来实现排行榜这样的功能。</p>
+<p>SortedSet的常见命令有：</p>
+<ul>
+<li><code>ZADD key score member</code>：添加一个或多个元素到sorted set ，如果已经存在则更新其score值</li>
+<li><code>ZREM key member</code>：删除sorted set中的一个指定元素</li>
+<li><code>ZSCORE key member</code> : 获取sorted set中的指定元素的score值</li>
+<li><code>ZRANK key member</code>：获取sorted set 中的指定元素的排名</li>
+<li><code>ZCARD key</code>：获取sorted set中的元素个数</li>
+<li><code>ZCOUNT key min max</code>：统计score值在给定范围内的所有元素的个数</li>
+<li><code>ZINCRBY key increment member</code>：让sorted set中的指定元素自增，步长为指定的increment值</li>
+<li><code>ZRANGE key min max</code>：按照score排序后，获取指定排名范围内的元素</li>
+<li><code>ZRANGEBYSCORE key min max</code>：按照score排序后，获取指定score范围内的元素</li>
+<li><code>ZDIFF.ZINTER.ZUNION</code>：求差集.交集.并集</li>
+</ul>
+<p>注意：所有的排名默认都是升序，如果要降序则在命令的Z后面添加REV即可，例如：</p>
+<ul>
+<li><strong>升序</strong>获取sorted set 中的指定元素的排名：ZRANK key member</li>
+<li><strong>降序</strong>获取sorted set 中的指定元素的排名：ZREVRANK key memeber</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+			
+			<!-- 添加打赏模块 -->
+			<div class="reward-container">
+				 
+					<button id="rewardBtn" class="reward-btn">
+						 
+							❤ 打赏
+						  	
+					</button>
+					<p class="tea">“觉得不错的话，给点打赏吧 ୧(๑•̀⌄•́๑)૭ ”</p>
+					<div id="rewardImgContainer" class="reward-img-container">
+					<div class="singleImgContainer">
+						<img id="wechatImg" class="reward-img" src="/img/wechatpay.jpg" alt="微信二维码">
+						<p class="wechatPay">微信支付</p>
+					</div>
+					<div class="singleImgContainer">
+						<img id="alipayImg" class="reward-img" src="/img/alipay.png" alt="支付宝二维码">
+						<p class="aliPay">支付宝支付</p>
+					</div>
+					</div>
+				
+			</div>
+			
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="category-chain-item">学习笔记</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Redis/">#Redis</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Redis数据结构及常见命令</div>
+      <div>https://blog.jishuqin.cn/posts/fa9b8c7d/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>顾梦</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月7日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2024年3月27日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/abcd1234/" title="Fliud LeanCloud统计访问数据">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Fliud LeanCloud统计访问数据</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/5e6f7a8b/" title="Redis消息队列">
+                        <span class="hidden-mobile">Redis消息队列</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <div id="twikoo"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/twikoo/1.6.8/twikoo.all.min.js', function() {
+        var options = Object.assign(
+          {"envId":"https://twikoo.gumengyo.top/","region":"ap-shanghai","path":"window.location.pathname"},
+          {
+            el: '#twikoo',
+            path: 'window.location.pathname',
+            onCommentLoaded: function() {
+              var imgSelector = '#twikoo .tk-content img:not(.tk-owo-emotion)';
+              Fluid.plugins.imageCaption(imgSelector);
+              Fluid.plugins.fancyBox(imgSelector);
+            }
+          }
+        )
+        twikoo.init(options)
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span class="umami--click--Footer-Hexo">Hexo</span></a> <span class="with-love"><img src="https://cdn.gumengyo.top/duck.gif" alt="" height="35" style="display:inline-block;vertical-align:middle" data-loaded="true" class="lozaded"> </span> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span class="umami--click--Footer-Fluid">Fluid</span></a> <div style="font-size: 0.85rem"> <span>本站由</span> <span class="with-love"><img src="https://cdn.gumengyo.top//qiniuyun.png" alt="" height="35" style="display:inline-block;vertical-align:middle" data-loaded="true" class="lozaded"> </span> <span>提供CDN加速/云存储服务</span> </div> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      粤ICP备2024161578号-1
+    </a>
+  </span>
+  
+    
+      <span>
+        <a
+          href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44050702001273"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="/img/police_beian.png" alt="police-icon"/>
+          
+          <span>粤公网安备44050702001273号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":true,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.gumengyo.top/blog/APlayer.min.js"></script>
+<script src="//cdn.gumengyo.top/blog/Meting.min.js"></script>
+<script src="//cdn.gumengyo.top/blog/wow.min.js"></script>
+<script src="//cdn1.tianli0.top/gh/zhheo/Post-Abstract-AI@0.8/tianli_gpt.js"></script>
+<script src="/js/wow_init.js"></script>
+<script src="/js/reward.js"></script>
+<script src="/js/loading.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script>
+  <link defer rel="stylesheet" href="/styles/backgroundize.css" />
+
+  <!-- 
+    <script 
+	async 
+	defer
+	src="http://cdn.jishuqin.cn/blog/random-string.js" 
+	data-website-id="bb749527-20c3-43b4-86bf-38105b1ebfc6"
+	data-host-url="http://47.115.210.241:3000"
+	data-domains="http://blog.jishuqin.cn/"
+	>
+    </script>
+  -->
+
+  <div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '1s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '2');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --></body>
+</html>

@@ -1,0 +1,1305 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://cloud.gumengyo.top/logo.png">
+  <link rel="icon" href="https://cloud.gumengyo.top/logo.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="顾梦">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Redis消息队列 1.认识消息队列 消息队列（Message Queue），字面意思就是存放消息的队列。 最简单的消息队列模型包括3个角色：   消息队列：存储和管理消息，也被称为消息代理（Message Broker）   生产者：发送消息到消息队列   消费者：从消息队列获取消息并处理消息    Redis提供了三种不同的方式来实现消息队列：   list结构：基于List结构模拟消息队列">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis消息队列">
+<meta property="og:url" content="https://blog.jishuqin.cn/posts/5e6f7a8b/index.html">
+<meta property="og:site_name" content="Gumeng’s blog">
+<meta property="og:description" content="Redis消息队列 1.认识消息队列 消息队列（Message Queue），字面意思就是存放消息的队列。 最简单的消息队列模型包括3个角色：   消息队列：存储和管理消息，也被称为消息代理（Message Broker）   生产者：发送消息到消息队列   消费者：从消息队列获取消息并处理消息    Redis提供了三种不同的方式来实现消息队列：   list结构：基于List结构模拟消息队列">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.gumengyo.top//lk956kjc.png">
+<meta property="article:published_time" content="2023-04-05T04:49:00.000Z">
+<meta property="article:modified_time" content="2024-03-27T09:02:49.775Z">
+<meta property="article:author" content="顾梦">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.gumengyo.top//lk956kjc.png">
+  
+  
+  
+  <title>Redis消息队列 - Gumeng’s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="//cdn.gumengyo.top/blog/shubiao.css">
+<link rel="stylesheet" href="//cdn.gumengyo.top/blog/APlayer.min.css">
+<link rel="stylesheet" href="/css/twikoo.css">
+<link rel="stylesheet" href="/css/font_ybwaieb31r/iconfont.css">
+<link rel="stylesheet" href="/css/font_mcfotbatm2l/iconfont.css">
+<link rel="stylesheet" href="//cdn1.tianli0.top/gh/zhheo/Post-Abstract-AI@0.8/tianli_gpt.css">
+<link rel="stylesheet" href="/css/reward.css">
+<link rel="stylesheet" href="/css/loading.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.jishuqin.cn","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"✦","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"#"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":true,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["-slim",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":6},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"hDuFZsFxs7Svak58Cr7BwZUk-gzGzoHsz","app_key":"xsTGLe4v4eXMi7H3I87RBRkL","server_url":"https://hdufzsfx.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+
+<!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Gumeng’s blog" type="application/atom+xml">
+</head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div>
+  <script>let tianliGPT_postSelector = '#board .post-content';let tianliGPT_key = '42b2043e99bbe0dba0f8';</script>
+  <!-- hexo injector body_begin end -->
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Gumeng&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+  <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+			<div class = "umami--click--Navigation-Homepage">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+			  </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-th-large"></i>
+                站点
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Mainpage">
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://gumengyo.top">
+                    <i class="iconfont icon-wangzhan"></i>
+                    主站
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Mainpage">
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://bl.gumengyo.top">
+                    <i class="iconfont icon-codepen-fill"></i>
+                    博客镜像站1
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Mainpage">
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://gumengyo.github.io">
+                    <i class="iconfont icon-codepen-fill"></i>
+                    博客镜像站2
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Monitor">
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://kuma.gumengyo.top/status/monitor">
+                    <i class="iconfont icon-codeforces"></i>
+                    站点监控
+                  </a>
+				  </div>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                文章
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Archive">
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    归档
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Category">
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    分类
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Tag">
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    标签
+                  </a>
+				  </div>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+			<div class = "umami--click--Navigation-Music">
+              <a class="nav-link" href="/playlist/">
+                <i class="iconfont icon-music"></i>
+                音乐
+              </a>
+			  </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-friends"></i>
+                社交
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Links">
+                  <a class="dropdown-item" href="/friendLlinks/">
+                    <i class="iconfont icon-link-fill"></i>
+                    友链
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Rss">
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://blog.gumengyo.top/atom.xml">
+                    <i class="iconfont icon-rss"></i>
+                    RSS订阅
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Fcircle">
+                  <a class="dropdown-item" href="/fcircle/">
+                    <i class="iconfont icon-users"></i>
+                    朋友圈
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Goto">
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://www.travellings.cn/go.html">
+                    <i class="iconfont icon-busdaba"></i>
+                    开往
+                  </a>
+				  </div>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+			<div class = "umami--click--Navigation-Comment">
+              <a class="nav-link" href="/tellme/">
+                <i class="iconfont icon-comment"></i>
+                留言板
+              </a>
+			  </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-user-fill"></i>
+                个人
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-About">
+                  <a class="dropdown-item" href="/about/">
+                    <i class="iconfont icon-addrcard"></i>
+                    关于
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Cloudreve">
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://cloudreve.gumengyo.top">
+                    <i class="iconfont icon-briefcase"></i>
+                    网盘
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-BookList">
+                  <a class="dropdown-item" href="/booklist/">
+                    <i class="iconfont icon-book"></i>
+                    读书
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Talks">
+                  <a class="dropdown-item" href="/talks/">
+                    <i class="iconfont icon-wechat2-fill"></i>
+                    说说
+                  </a>
+				  </div>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('http://cdn.gumengyo.top/post.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">Redis消息队列</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        顾梦
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-05 12:49" pubdate>
+          2023年4月5日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          17 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- HTML -->
+<div id="site-loader">
+  <div class="loader"></div>
+  <div class="text">正在加载，请稍候...</div>
+</div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem;">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Redis消息队列</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2024年3月27日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="Redis消息队列">Redis消息队列</h2>
+<h3 id="1-认识消息队列">1.认识消息队列</h3>
+<p><strong>消息队列</strong>（<strong>M</strong>essage <strong>Q</strong>ueue），字面意思就是存放消息的队列。</p>
+<p>最简单的消息队列模型包括3个角色：</p>
+<ul>
+<li>
+<p>消息队列：存储和管理消息，也被称为消息代理（Message Broker）</p>
+</li>
+<li>
+<p>生产者：发送消息到消息队列</p>
+</li>
+<li>
+<p>消费者：从消息队列获取消息并处理消息</p>
+</li>
+</ul>
+<p><img src="https://cdn.gumengyo.top//202304051317741.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>Redis提供了三种不同的方式来实现消息队列：</p>
+<ul>
+<li>
+<p>list结构：基于List结构模拟消息队列</p>
+</li>
+<li>
+<p>PubSub：基本的点对点消息模型</p>
+</li>
+<li>
+<p>Stream：比较完善的消息队列模型</p>
+</li>
+</ul>
+<h3 id="2-基于List实现消息队列">2.基于List实现消息队列</h3>
+<p>Redis的list数据结构是一个双向链表，很容易模拟出队列效果。</p>
+<p>队列是入口和出口不在一边，因此我们可以利用：LPUSH 结合 RPOP、或者 RPUSH 结合 LPOP来实现。</p>
+<p>不过要注意的是，当队列中没有消息时RPOP或LPOP操作会返回null，并不像JVM的阻塞队列那样会阻塞并等待消息。因此这里应该使用<strong>BRPOP</strong>或者<strong>BLPOP</strong>来实现阻塞效果。</p>
+<p>命令：</p>
+<p><code>LPUSH key value1 [value2]</code>		将一个或多个值插入到列表头部。</p>
+<p><code> RPOP key</code>		移出并获取列表的最后一个元素，如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。</p>
+<p><code>BRPOP key1 [key2] timeout</code>：移除并获取列表最后一个元素。</p>
+<p><code>RPUSH key value1 [value2]</code>：在列表中添加一个或多个值。</p>
+<p><code> BLPOP key1 [key2] timeout</code>：移出并获取列表的第一个元素，如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。</p>
+<p><img src="https://cdn.gumengyo.top//1653575176451.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>优点：</p>
+<ul>
+<li>
+<p>利用Redis存储，不受限于JVM内存上限</p>
+</li>
+<li>
+<p>基于Redis的持久化机制，数据安全性有保证</p>
+</li>
+<li>
+<p>可以满足消息有序性</p>
+</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>
+<p>无法避免消息丢失</p>
+</li>
+<li>
+<p>只支持单消费者</p>
+</li>
+</ul>
+<h3 id="3-基于PubSub的消息队列">3.基于PubSub的消息队列</h3>
+<p><strong>PubSub（发布订阅）</strong> 是Redis2.0版本引入的消息传递模型。顾名思义，消费者可以订阅一个或多个channel，生产者向对应channel发送消息后，所有订阅者都能收到相关消息。</p>
+<p>命令：</p>
+<p><code>SUBSCRIBE channel [channel]</code>：订阅一个或多个频道<br>
+<code>PUBLISH channel msg</code> ：向一个频道发送消息<br>
+<code>PSUBSCRIBE pattern[pattern]</code>：订阅与pattern格式匹配的所有频道</p>
+<p><img src="https://cdn.gumengyo.top/1653575506373.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>优点：</p>
+<ul>
+<li>采用发布订阅模型，支持多生产、多消费</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>不支持数据持久化</li>
+<li>无法避免消息丢失</li>
+<li>消息堆积有上限，超出时数据丢失</li>
+</ul>
+<h3 id="4-基于Stream的消息队列">4.基于Stream的消息队列</h3>
+<p>Stream 是 Redis 5.0 引入的一种新数据类型，可以实现一个功能非常完善的消息队列。</p>
+<p>它支持消息的持久化、支持自动生成全局唯一ID、支持ack确认消息的模式、支持消费组模式等，让消息队列更加的稳定和可靠。</p>
+<h5 id="Stream结构">Stream结构</h5>
+<p><img src="https://cdn.gumengyo.top//202304051338733.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Message Content</td>
+<td style="text-align:left">消息内容</td>
+</tr>
+<tr>
+<td>Consumer group</td>
+<td style="text-align:left">消费组，通过XGROUP CREATE 命令创建，同一个消费组可以有多个消费者</td>
+</tr>
+<tr>
+<td>Consumer</td>
+<td style="text-align:left">游标，每个消费组会有个游标 last_delivered_id，任意一个消费者读取了消息都会使游标 last_delivered_id 往前移动。</td>
+</tr>
+<tr>
+<td>Consumer</td>
+<td style="text-align:left">消费者，消费组中的消费者</td>
+</tr>
+<tr>
+<td>Pending_ids</td>
+<td style="text-align:left">消费者，消费组中的消费者</td>
+</tr>
+</tbody>
+</table>
+<h5 id="队列相关指令">队列相关指令</h5>
+<table>
+<thead>
+<tr>
+<th>指令名称</th>
+<th>指令作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>XADD</td>
+<td>添加消息到队列末尾</td>
+</tr>
+<tr>
+<td>XTRIM</td>
+<td>限制Stream的长度,如果已经超长会进行截取</td>
+</tr>
+<tr>
+<td>XDEL</td>
+<td>删除消息</td>
+</tr>
+<tr>
+<td>XLEN</td>
+<td>获取Stream中的消息长度</td>
+</tr>
+<tr>
+<td>XRANGE</td>
+<td>获取消息列表(可指定范围),忽略删除的信息</td>
+</tr>
+<tr>
+<td>XREVRANGE</td>
+<td>和XRANGE相比区别在于反向获取,ID从大到小</td>
+</tr>
+<tr>
+<td>XREAD</td>
+<td>获取消息(阻塞/非阻塞),返回大于指定ID的消息</td>
+</tr>
+</tbody>
+</table>
+<p>STREAM类型消息队列的XREAD命令特点：</p>
+<ul>
+<li>消息可回溯</li>
+<li>一个消息可以被多个消费者读取</li>
+<li>可以阻塞读取</li>
+<li>有消息漏读的风险</li>
+</ul>
+<h5 id="消费组相关指令">消费组相关指令</h5>
+<table>
+<thead>
+<tr>
+<th>指令名称</th>
+<th>指令作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>XGROUP CREATE</td>
+<td>创建消费者组</td>
+</tr>
+<tr>
+<td>XREADGROUP GROUP</td>
+<td>读取消费者组中的消息</td>
+</tr>
+<tr>
+<td>XACK</td>
+<td>ack消息，消息被标记为&quot;已处理</td>
+</tr>
+<tr>
+<td>XGROUP SETID</td>
+<td>设置消费者组最后递送消息的D</td>
+</tr>
+<tr>
+<td>XGROUP DELCONSUMER</td>
+<td>删除消费者组</td>
+</tr>
+<tr>
+<td>XPENDING</td>
+<td>打印待处理消息的详细信息</td>
+</tr>
+<tr>
+<td>XCLAIM</td>
+<td>转移消息的归属权（长期未被处理/无法处理的消息，转交给其他消费者组进行处理）</td>
+</tr>
+<tr>
+<td>XINFO</td>
+<td>打印Stream\Consumer八Group的详细信息</td>
+</tr>
+<tr>
+<td>XINFO GROUPS</td>
+<td>打印消费者组的详细信息</td>
+</tr>
+<tr>
+<td>XINFO STREAM</td>
+<td>打印Streaml的详细信息</td>
+</tr>
+</tbody>
+</table>
+<p>STREAM类型消息队列的XREADGROUP命令特点：</p>
+<ul>
+<li>消息可回溯</li>
+<li>可以多消费者争抢消息，加快消费速度</li>
+<li>可以阻塞读取</li>
+<li>没有消息漏读的风险</li>
+<li>有消息确认机制，保证消息至少被消费一次</li>
+</ul>
+<h5 id="四个特殊符号">四个特殊符号</h5>
+<ol>
+<li>
+<p><code>- +</code> ：最小和最大可能出现的id。</p>
+</li>
+<li>
+<p><code>$</code> ：$表示只消费新的消息，当前流中最大的d,可用于将要到来的信息。</p>
+</li>
+<li>
+<p><code>&gt;</code> ：用于XREADGROUP命令，表示迄今还没有发送给组中使用者的信息，会更新消费者组的最后ID。</p>
+</li>
+<li>
+<p><code>*</code> ：用于XADD命令中，让系统自动生成id。</p>
+</li>
+</ol>
+<hr>
+<h4 id="对比">对比:</h4>
+<p><img src="https://cdn.gumengyo.top//202304051356489.png" srcset="/img/loading.gif" lazyload alt=""></p>
+
+                
+              </div>
+            
+            <hr/>
+			
+			<!-- 添加打赏模块 -->
+			<div class="reward-container">
+				 
+					<button id="rewardBtn" class="reward-btn">
+						 
+							❤ 打赏
+						  	
+					</button>
+					<p class="tea">“觉得不错的话，给点打赏吧 ୧(๑•̀⌄•́๑)૭ ”</p>
+					<div id="rewardImgContainer" class="reward-img-container">
+					<div class="singleImgContainer">
+						<img id="wechatImg" class="reward-img" src="/img/wechatpay.jpg" alt="微信二维码">
+						<p class="wechatPay">微信支付</p>
+					</div>
+					<div class="singleImgContainer">
+						<img id="alipayImg" class="reward-img" src="/img/alipay.png" alt="支付宝二维码">
+						<p class="aliPay">支付宝支付</p>
+					</div>
+					</div>
+				
+			</div>
+			
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="category-chain-item">学习笔记</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Redis/">#Redis</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Redis消息队列</div>
+      <div>https://blog.jishuqin.cn/posts/5e6f7a8b/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>顾梦</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月5日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2024年3月27日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/fa9b8c7d/" title="Redis数据结构及常见命令">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Redis数据结构及常见命令</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/eeaa9988/" title="Fluid主题添加音乐功能">
+                        <span class="hidden-mobile">Fluid主题添加音乐功能</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <div id="twikoo"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/twikoo/1.6.8/twikoo.all.min.js', function() {
+        var options = Object.assign(
+          {"envId":"https://twikoo.gumengyo.top/","region":"ap-shanghai","path":"window.location.pathname"},
+          {
+            el: '#twikoo',
+            path: 'window.location.pathname',
+            onCommentLoaded: function() {
+              var imgSelector = '#twikoo .tk-content img:not(.tk-owo-emotion)';
+              Fluid.plugins.imageCaption(imgSelector);
+              Fluid.plugins.fancyBox(imgSelector);
+            }
+          }
+        )
+        twikoo.init(options)
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span class="umami--click--Footer-Hexo">Hexo</span></a> <span class="with-love"><img src="https://cdn.gumengyo.top/duck.gif" alt="" height="35" style="display:inline-block;vertical-align:middle" data-loaded="true" class="lozaded"> </span> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span class="umami--click--Footer-Fluid">Fluid</span></a> <div style="font-size: 0.85rem"> <span>本站由</span> <span class="with-love"><img src="https://cdn.gumengyo.top//qiniuyun.png" alt="" height="35" style="display:inline-block;vertical-align:middle" data-loaded="true" class="lozaded"> </span> <span>提供CDN加速/云存储服务</span> </div> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      粤ICP备2024161578号-1
+    </a>
+  </span>
+  
+    
+      <span>
+        <a
+          href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44050702001273"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="/img/police_beian.png" alt="police-icon"/>
+          
+          <span>粤公网安备44050702001273号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":true,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.gumengyo.top/blog/APlayer.min.js"></script>
+<script src="//cdn.gumengyo.top/blog/Meting.min.js"></script>
+<script src="//cdn.gumengyo.top/blog/wow.min.js"></script>
+<script src="//cdn1.tianli0.top/gh/zhheo/Post-Abstract-AI@0.8/tianli_gpt.js"></script>
+<script src="/js/wow_init.js"></script>
+<script src="/js/reward.js"></script>
+<script src="/js/loading.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script>
+  <link defer rel="stylesheet" href="/styles/backgroundize.css" />
+
+  <!-- 
+    <script 
+	async 
+	defer
+	src="http://cdn.jishuqin.cn/blog/random-string.js" 
+	data-website-id="bb749527-20c3-43b4-86bf-38105b1ebfc6"
+	data-host-url="http://47.115.210.241:3000"
+	data-domains="http://blog.jishuqin.cn/"
+	>
+    </script>
+  -->
+
+  <div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '1s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '2');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --></body>
+</html>

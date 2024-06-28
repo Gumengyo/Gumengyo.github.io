@@ -1,0 +1,1387 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://cloud.gumengyo.top/logo.png">
+  <link rel="icon" href="https://cloud.gumengyo.top/logo.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="顾梦">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="此文为我在校学习物联网安全课程的笔记~ 凯撒密码 凯撒密码是一种古代的加密方式，它是史上第一个广为使用的密码，得名于古罗马军事统帅凯撒。它的基本思想是对明文进行位移，即将明文中的每个字母都替换成字母表中靠它固定数量的字母。例如，若位移数为3，则a变成d，b变成e，…，y变成b，z变成c。 下面是一个例子，对明文“HELLO WORLD”进行加密： 位移数 &#x3D; 3 明文  ：    H E L L">
+<meta property="og:type" content="article">
+<meta property="og:title" content="加密算法">
+<meta property="og:url" content="https://blog.jishuqin.cn/posts/1f2e3d4c/index.html">
+<meta property="og:site_name" content="Gumeng’s blog">
+<meta property="og:description" content="此文为我在校学习物联网安全课程的笔记~ 凯撒密码 凯撒密码是一种古代的加密方式，它是史上第一个广为使用的密码，得名于古罗马军事统帅凯撒。它的基本思想是对明文进行位移，即将明文中的每个字母都替换成字母表中靠它固定数量的字母。例如，若位移数为3，则a变成d，b变成e，…，y变成b，z变成c。 下面是一个例子，对明文“HELLO WORLD”进行加密： 位移数 &#x3D; 3 明文  ：    H E L L">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.gumengyo.top//wallhavenrrodj7.jpg">
+<meta property="article:published_time" content="2023-06-09T09:19:00.000Z">
+<meta property="article:modified_time" content="2024-03-27T09:02:03.675Z">
+<meta property="article:author" content="顾梦">
+<meta property="article:tag" content="加密">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.gumengyo.top//wallhavenrrodj7.jpg">
+  
+  
+  
+  <title>加密算法 - Gumeng’s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="//cdn.gumengyo.top/blog/shubiao.css">
+<link rel="stylesheet" href="//cdn.gumengyo.top/blog/APlayer.min.css">
+<link rel="stylesheet" href="/css/twikoo.css">
+<link rel="stylesheet" href="/css/font_ybwaieb31r/iconfont.css">
+<link rel="stylesheet" href="/css/font_mcfotbatm2l/iconfont.css">
+<link rel="stylesheet" href="//cdn1.tianli0.top/gh/zhheo/Post-Abstract-AI@0.8/tianli_gpt.css">
+<link rel="stylesheet" href="/css/reward.css">
+<link rel="stylesheet" href="/css/loading.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.jishuqin.cn","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"✦","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"#"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":true,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["-slim",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":6},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"hDuFZsFxs7Svak58Cr7BwZUk-gzGzoHsz","app_key":"xsTGLe4v4eXMi7H3I87RBRkL","server_url":"https://hdufzsfx.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+
+<!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Gumeng’s blog" type="application/atom+xml">
+</head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div>
+  <script>let tianliGPT_postSelector = '#board .post-content';let tianliGPT_key = '42b2043e99bbe0dba0f8';</script>
+  <!-- hexo injector body_begin end -->
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Gumeng&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+  <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+			<div class = "umami--click--Navigation-Homepage">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+			  </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-th-large"></i>
+                站点
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Mainpage">
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://gumengyo.top">
+                    <i class="iconfont icon-wangzhan"></i>
+                    主站
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Mainpage">
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://bl.gumengyo.top">
+                    <i class="iconfont icon-codepen-fill"></i>
+                    博客镜像站1
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Mainpage">
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://gumengyo.github.io">
+                    <i class="iconfont icon-codepen-fill"></i>
+                    博客镜像站2
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Monitor">
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://kuma.gumengyo.top/status/monitor">
+                    <i class="iconfont icon-codeforces"></i>
+                    站点监控
+                  </a>
+				  </div>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                文章
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Archive">
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    归档
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Category">
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    分类
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Tag">
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    标签
+                  </a>
+				  </div>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+			<div class = "umami--click--Navigation-Music">
+              <a class="nav-link" href="/playlist/">
+                <i class="iconfont icon-music"></i>
+                音乐
+              </a>
+			  </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-friends"></i>
+                社交
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Links">
+                  <a class="dropdown-item" href="/friendLlinks/">
+                    <i class="iconfont icon-link-fill"></i>
+                    友链
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Rss">
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://blog.gumengyo.top/atom.xml">
+                    <i class="iconfont icon-rss"></i>
+                    RSS订阅
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Fcircle">
+                  <a class="dropdown-item" href="/fcircle/">
+                    <i class="iconfont icon-users"></i>
+                    朋友圈
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Goto">
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://www.travellings.cn/go.html">
+                    <i class="iconfont icon-busdaba"></i>
+                    开往
+                  </a>
+				  </div>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+			<div class = "umami--click--Navigation-Comment">
+              <a class="nav-link" href="/tellme/">
+                <i class="iconfont icon-comment"></i>
+                留言板
+              </a>
+			  </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-user-fill"></i>
+                个人
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-About">
+                  <a class="dropdown-item" href="/about/">
+                    <i class="iconfont icon-addrcard"></i>
+                    关于
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Cloudreve">
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://cloudreve.gumengyo.top">
+                    <i class="iconfont icon-briefcase"></i>
+                    网盘
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-BookList">
+                  <a class="dropdown-item" href="/booklist/">
+                    <i class="iconfont icon-book"></i>
+                    读书
+                  </a>
+				  </div>
+                
+                  
+                  
+                  
+				  <div class = "umami--click--Navigation-Talks">
+                  <a class="dropdown-item" href="/talks/">
+                    <i class="iconfont icon-wechat2-fill"></i>
+                    说说
+                  </a>
+				  </div>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('http://cdn.gumengyo.top/post.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">加密算法</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        顾梦
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-06-09 17:19" pubdate>
+          2023年6月9日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          31 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- HTML -->
+<div id="site-loader">
+  <div class="loader"></div>
+  <div class="text">正在加载，请稍候...</div>
+</div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem;">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">加密算法</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2024年3月27日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p class="note note-primary">此文为我在校学习物联网安全课程的笔记~</p>
+<h2 id="凯撒密码">凯撒密码</h2>
+<p>凯撒密码是一种古代的加密方式，它是史上第一个广为使用的密码，得名于古罗马军事统帅凯撒。它的基本思想是对明文进行位移，即将明文中的每个字母都替换成字母表中靠它固定数量的字母。例如，若位移数为3，则a变成d，b变成e，…，y变成b，z变成c。</p>
+<p>下面是一个例子，对明文“HELLO WORLD”进行加密：<br>
+位移数 = 3</p>
+<p>明文  ：</p>
+<table>
+<thead>
+<tr>
+<th>H</th>
+<th>E</th>
+<th>L</th>
+<th>L</th>
+<th>O</th>
+<th></th>
+<th>W</th>
+<th>O</th>
+<th>R</th>
+<th>L</th>
+<th>D</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8</td>
+<td>5</td>
+<td>12</td>
+<td>12</td>
+<td>15</td>
+<td></td>
+<td>23</td>
+<td>15</td>
+<td>18</td>
+<td>12</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p>密文  ：</p>
+<table>
+<thead>
+<tr>
+<th>K</th>
+<th>H</th>
+<th>O</th>
+<th>O</th>
+<th>R</th>
+<th></th>
+<th>Z</th>
+<th>R</th>
+<th>U</th>
+<th>O</th>
+<th>G</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>11</td>
+<td>8</td>
+<td>15</td>
+<td>15</td>
+<td>18</td>
+<td></td>
+<td>26</td>
+<td>18</td>
+<td>21</td>
+<td>15</td>
+<td>7</td>
+</tr>
+</tbody>
+</table>
+<p>可以看到，每个字母都向后移动了三个位置，得到了对应的密文。</p>
+<h2 id="置换密码">置换密码</h2>
+<h3 id="平移置换加密法">平移置换加密法</h3>
+<p>置换加密法的一种简单实现形式是平移置换加密法，这很像洗一副纸牌。在平移置换加密法中，将密文分成了固定长度的块。通常，块越大越不容易破译。设块大小为s，置换函数f用于从1到s中选取一个整数，每个块中的字母根据f重新排列。这种加密法的密钥就是（s，f）对应的具体数值。例如，设s为4，f给定为（2，4，1，3）。这意味着第1个字符移到位置3，第2个字符移到位置1，第3个字符移到位置4，第4个字符移到位置2。</p>
+<p>例如，利用这种置换加密法将明文“The only limit to our realization of tomorrow will be our doubts of today”加密。首先，设置密钥（d，f），如将d设为7，则明文将被分成块，每块包含7个字母，不足的用空字符填满。然后，根据给定的函数f=（4，2，3，5，7，6，1）将每个块重新排列，生成对应的密文，如下所示。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">The <span class="hljs-keyword">only</span> <span class="hljs-keyword">limit</span> <span class="hljs-keyword">to</span> our realization <span class="hljs-keyword">of</span> tomorrow will be our doubts <span class="hljs-keyword">of</span> today<br></code></pre></td></tr></table></figure>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">ohenyltiimtotlrurelaotzainoioftmroowowillrueorodbsbtotfuydazzzo</span><br></code></pre></td></tr></table></figure>
+<h3 id="列位移置换函数">列位移置换函数</h3>
+<p>列置换加密法是将明文按行填写在一个矩形中，而密文则是以预定的顺序按列读取生成的。例如，如果矩形是4列5行，那么短语“encryption algorithms”可以如图6所示写入矩形中。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">1</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">e</td>
+<td style="text-align:center">n</td>
+<td style="text-align:center">c</td>
+<td style="text-align:center">r</td>
+</tr>
+<tr>
+<td style="text-align:center">y</td>
+<td style="text-align:center">p</td>
+<td style="text-align:center">t</td>
+<td style="text-align:center">i</td>
+</tr>
+<tr>
+<td style="text-align:center">o</td>
+<td style="text-align:center">n</td>
+<td style="text-align:center">a</td>
+<td style="text-align:center">l</td>
+</tr>
+<tr>
+<td style="text-align:center">g</td>
+<td style="text-align:center">o</td>
+<td style="text-align:center">r</td>
+<td style="text-align:center">i</td>
+</tr>
+<tr>
+<td style="text-align:center">t</td>
+<td style="text-align:center">h</td>
+<td style="text-align:center">m</td>
+<td style="text-align:center">s</td>
+</tr>
+</tbody>
+</table>
+<p>按一定的顺序读取列以生成密文。对于这个示例，如果读取顺序是4、1、2、3，那么密文就是“riliseyogtnpnohctarm”。这种加密法要求填满矩形，因此，如果明文的字母不够，可以添加“x”或“q”甚至空字符。<br>
+这种加密法的密钥是列数和读取列的顺序。如果列数很多，则记起来可能会比较闲难，因此可以将它表示成一个关键词，以方便记忆。该关键词的长度等于列数，而其字母顺序决定读取列的顺序。</p>
+<h3 id="栅栏式置换函数">栅栏式置换函数</h3>
+<h4 id="对角线方式">对角线方式</h4>
+<p><strong>使用了对角线方式。在这种加密法中，明文是按Z字形的方式填写在矩形的对角线上，而按行读取生成密文。</strong></p>
+<p>例如，如果矩形的高为3，长为11，那么明文“this is a test”在该矩形中的填写如图4所示。而按行读取所生成的密文就是“tiehsstsiat”。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">t</th>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+<th style="text-align:center">i</th>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+<th style="text-align:center">e</th>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">h</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">s</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">s</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">t</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">s</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">i</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">a</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">t</td>
+</tr>
+</tbody>
+</table>
+<h4 id="三角加密">三角加密</h4>
+<p>例如，在一个固定大小的矩形中，可以将明文填写成一个三角形，然后按列读取生成密文。图5所示的是将明文“you must do that now”填写在一个7x4的矩形中。按行读取生成的密文是“tuhosayuttmdnoow”。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+<th style="text-align:center">y</th>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">o</td>
+<td style="text-align:center">u</td>
+<td style="text-align:center">m</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">u</td>
+<td style="text-align:center">s</td>
+<td style="text-align:center">t</td>
+<td style="text-align:center">d</td>
+<td style="text-align:center">o</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">t</td>
+<td style="text-align:center">h</td>
+<td style="text-align:center">a</td>
+<td style="text-align:center">t</td>
+<td style="text-align:center">n</td>
+<td style="text-align:center">o</td>
+<td style="text-align:center">w</td>
+</tr>
+</tbody>
+</table>
+<h2 id="RSA-加密算法">RSA 加密算法</h2>
+<p><img src="https://cdn.gumengyo.top//1685516391257-d602b2d6-3cb6-4433-9a7d-d7dff8a1c159.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p><img src="https://cdn.gumengyo.top//1685516409843-62eff3b1-0c9f-4e4c-adc0-4fceb806406f.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>RSA是一种非对称加密算法。假设需要将明文&quot;MONEY&quot;进行加密，并使用RSA算法保护数据的安全性。以下是RSA加密和解密的详细运算过程。</p>
+<ol>
+<li>密钥生成过程：</li>
+</ol>
+<p>选择两个大素数p=11和q=17，计算n=p<em>q=187，根据欧拉函数的定义φ(n)=(p-1)</em>(q-1)=160，选择一个小于φ(n)且与φ(n)互质的整数e=7，计算e的模逆数d，使得(e*d) mod φ(n)=1，有d=23。公钥为(n,e)=(187,7)，私钥为(n,d)=(187,23)。</p>
+<ol start="2">
+<li>加密过程：</li>
+</ol>
+<p>将明文&quot;MONEY&quot;转换成相应的ASCII码数值&quot;77 79 78 69 89&quot;，然后使用公钥(n, e)对每个数字进行加密运算，并将得到的密文表示成16进制数。</p>
+<ul>
+<li>
+<p>明文&quot;M&quot;，对应的ASCII码为77，加密后的密文为：</p>
+<p>C = 77^7 mod 187 = 38</p>
+<p>密文位数不足2位，需要在前面补0，因此该密文表示成16进制为0x26。</p>
+</li>
+<li>
+<p>明文&quot;O&quot;，对应的ASCII码为79，加密后的密文为：</p>
+<p>C = 79^7 mod 187 = 178</p>
+<p>该密文表示成16进制为0xB2。</p>
+</li>
+<li>
+<p>明文&quot;N&quot;，对应的ASCII码为78，加密后的密文为：</p>
+<p>C = 78^7 mod 187 = 89</p>
+<p>密文位数不足2位，需要在前面补0，因此该密文表示成16进制为0x59。</p>
+</li>
+<li>
+<p>明文&quot;E&quot;，对应的ASCII码为69，加密后的密文为：</p>
+<p>C = 69^7 mod 187 = 19</p>
+<p>密文位数不足2位，需要在前面补0，因此该密文表示成16进制为0x13。</p>
+</li>
+<li>
+<p>明文&quot;Y&quot;，对应的ASCII码为89，加密后的密文为：</p>
+<p>C = 89^7 mod 187 = 157</p>
+<p>该密文表示成16进制为0x9D。</p>
+</li>
+</ul>
+<p>因此，明文&quot;MONEY&quot;加密后的密文为&quot;0x26 0xB2 0x59 0x13 0x9D&quot;。</p>
+<ol start="3">
+<li>解密过程：</li>
+</ol>
+<p>使用私钥(n, d)对上一步得到的密文进行解密。</p>
+<ul>
+<li>
+<p>密文&quot;0x26&quot;，解密后得到原文为：</p>
+<p>M = 38^23 mod 187 = 77</p>
+<p>解密后的原文为&quot;M&quot;。</p>
+</li>
+<li>
+<p>密文&quot;0xB2&quot;，解密后得到原文为：</p>
+<p>M = 178^23 mod 187 = 79</p>
+<p>解密后的原文为&quot;O&quot;。</p>
+</li>
+<li>
+<p>密文&quot;0x59&quot;，解密后得到原文为：</p>
+<p>M = 89^23 mod 187 = 78</p>
+<p>解密后的原文为&quot;N&quot;。</p>
+</li>
+<li>
+<p>密文&quot;0x13&quot;，解密后得到原文为：</p>
+<p>M = 19^23 mod 187 = 69</p>
+<p>解密后的原文为&quot;E&quot;。</p>
+</li>
+<li>
+<p>密文&quot;0x9D&quot;，解密后得到原文为：</p>
+<p>M = 157^23 mod 187 = 89</p>
+<p>解密后的原文为&quot;Y&quot;。</p>
+</li>
+</ul>
+<p>因此，RSA算法加密后再解密，得到的原文是&quot;MONEY&quot;。</p>
+<p>以上就是RSA加密和解密的详细运算过程。RSA算法是一种非常流行的公钥加密算法，其安全性取决于选取的参数。在实际应用中，需要采用足够长度的密钥和安全的参数，以保护数据的安全性。</p>
+<h3 id="证明题">证明题</h3>
+<p class="katex-block "><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>证明题一：</mtext><mi>φ</mi><mtext>（</mtext><mi>n</mi><mo stretchy="false">)</mo><mo>=</mo><mi>n</mi><mo>−</mo><mn>1</mn><mtext>，</mtext><mi>n</mi><mtext>为质数</mtext><mspace linebreak="newline"></mspace><mtext>证明：</mtext><mi>φ</mi><mtext>（</mtext><mi>n</mi><mo stretchy="false">)</mo><mo>=</mo><mi>n</mi><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>k</mi></munderover><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mfrac><mn>1</mn><msub><mi>P</mi><mi>i</mi></msub></mfrac><mo stretchy="false">)</mo><mo separator="true">,</mo><msub><mi>P</mi><mi>i</mi></msub><mtext>为</mtext><mi>n</mi><mtext>的质因数</mtext><mspace linebreak="newline"></mspace><mtext>当</mtext><mi>n</mi><mtext>为质数时，</mtext><mi>n</mi><mtext>的非</mtext><mn>1</mn><mtext>质因数为</mtext><mi>n</mi><mspace linebreak="newline"></mspace><mtext>那么</mtext><mi>φ</mi><mtext>（</mtext><mi>n</mi><mo stretchy="false">)</mo><mo>=</mo><mi>n</mi><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><mo stretchy="false">)</mo><mo>=</mo><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">证明题一： \varphi（n) = n - 1，n 为质数\\
+证明：\varphi（n) = n\prod_{i=1}^k  (1 - \frac{1}{P_i}),P_i为n的质因数
+\\ 当n为质数时，n的非1质因数为n
+\\ 那么\varphi（n) = n(1-\frac{1}{n}) = n-1
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord cjk_fallback">证明题一：</span><span class="mord mathnormal">φ</span><span class="mord cjk_fallback">（</span><span class="mord mathnormal">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord">1</span><span class="mord cjk_fallback">，</span><span class="mord mathnormal">n</span><span class="mord cjk_fallback">为质数</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord cjk_fallback">证明：</span><span class="mord mathnormal">φ</span><span class="mord cjk_fallback">（</span><span class="mord mathnormal">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:3.1138em;vertical-align:-1.2777em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8361em;"><span style="top:-1.8723em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∏</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2777em;"><span></span></span></span></span></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:2.1574em;vertical-align:-0.836em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.836em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord cjk_fallback">为</span><span class="mord mathnormal">n</span><span class="mord cjk_fallback">的质因数</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord cjk_fallback">当</span><span class="mord mathnormal">n</span><span class="mord cjk_fallback">为质数时，</span><span class="mord mathnormal">n</span><span class="mord cjk_fallback">的非</span><span class="mord">1</span><span class="mord cjk_fallback">质因数为</span><span class="mord mathnormal">n</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord cjk_fallback">那么</span><span class="mord mathnormal">φ</span><span class="mord cjk_fallback">（</span><span class="mord mathnormal">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">n</span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:2.0074em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">n</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></span></p>
+<p class="katex-block "><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>证明：当</mtext><mi>m</mi><mo separator="true">,</mo><mi>n</mi><mtext>互质时，令</mtext><msub><mi>P</mi><mn>1</mn></msub><mtext>，</mtext><mo separator="true">⋅</mo><mo separator="true">⋅</mo><mo separator="true">⋅</mo><mtext>，</mtext><msub><mi>P</mi><mi>k</mi></msub><mtext>为</mtext><mi>m</mi><mtext>的所有非</mtext><mn>1</mn><mtext>质因数</mtext><mspace linebreak="newline"></mspace><msub><mi>q</mi><mn>1</mn></msub><mtext>，</mtext><mo separator="true">⋅</mo><mo separator="true">⋅</mo><mo separator="true">⋅</mo><mtext>，</mtext><msub><mi>q</mi><mi>r</mi></msub><mtext>为</mtext><mi>n</mi><mtext>的所有非</mtext><mn>1</mn><mtext>质因数</mtext><mspace linebreak="newline"></mspace><mtext>则</mtext><msub><mi>P</mi><mi>i</mi></msub><mo mathvariant="normal">≠</mo><msub><mi>q</mi><mi>j</mi></msub><mo stretchy="false">(</mo><mi>i</mi><mo>=</mo><mn>1</mn><mtext>，</mtext><mo separator="true">⋅</mo><mo separator="true">⋅</mo><mo separator="true">⋅</mo><mo separator="true">,</mo><mi>k</mi><mo separator="true">,</mo><mi>j</mi><mo>=</mo><mn>1</mn><mo separator="true">,</mo><mo separator="true">⋅</mo><mo separator="true">⋅</mo><mo separator="true">⋅</mo><mo separator="true">,</mo><mi>r</mi><mo stretchy="false">)</mo><mspace linebreak="newline"></mspace><mtext>且</mtext><msub><mi>P</mi><mn>1</mn></msub><mtext>，</mtext><mo separator="true">⋅</mo><mo separator="true">⋅</mo><mo separator="true">⋅</mo><msub><mi>P</mi><mi>k</mi></msub><mo separator="true">,</mo><msub><mi>q</mi><mn>1</mn></msub><mtext>，</mtext><mo separator="true">⋅</mo><mo separator="true">⋅</mo><mo separator="true">⋅</mo><mo separator="true">,</mo><msub><mi>q</mi><mi>r</mi></msub><mtext>为</mtext><mi>m</mi><mi>n</mi><mtext>的所有质因数</mtext><mspace linebreak="newline"></mspace><mtable rowspacing="0.16em" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mtext>则</mtext><mi>φ</mi><mtext>（</mtext><mi>m</mi><mi>n</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>=</mo><mi>m</mi><mi>n</mi><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>k</mi></munderover><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mfrac><mn>1</mn><msub><mi>P</mi><mi>i</mi></msub></mfrac><mtext>）</mtext><munderover><mo>∏</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mi>r</mi></munderover><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mfrac><mn>1</mn><msub><mi>q</mi><mi>j</mi></msub></mfrac><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>=</mo><mi>m</mi><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>k</mi></munderover><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mfrac><mn>1</mn><msub><mi>P</mi><mi>i</mi></msub></mfrac><mo stretchy="false">)</mo><mi>n</mi><munderover><mo>∏</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mi>r</mi></munderover><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mfrac><mn>1</mn><msub><mi>q</mi><mi>j</mi></msub></mfrac><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>=</mo><mi>φ</mi><mtext>（</mtext><mi>m</mi><mo stretchy="false">)</mo><mi>φ</mi><mtext>（</mtext><mi>n</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr></mtable></mstyle></mtd></mtr></mtable></mrow><annotation encoding="application/x-tex">证明：当m,n互质时，
+令P_1，···，P_k为m的所有非1质因数\\
+q_1，···，q_r为n的所有非1质因数\\
+则P_i\neq q_j(i=1，···,k,j=1,···,r)\\
+且P_1，···P_k,q_1，···,q_r为mn的所有质因数\\
+\begin{equation*}
+	\begin{split}
+          则\varphi（mn)
+           &amp;=mn\prod_{i=1}^k(1-\frac{1}{P_i}）\prod_{j=1}^r(1-\frac{1}{q_j})\\
+           &amp;=m\prod_{i=1}^k(1-\frac{1}{P_i})n\prod_{j=1}^r(1-\frac{1}{q_j})\\
+           &amp;=\varphi（m)\varphi（n)\\
+	\end{split}
+\end{equation*}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord cjk_fallback">证明：当</span><span class="mord mathnormal">m</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">n</span><span class="mord cjk_fallback">互质时，令</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord cjk_fallback">，</span><span class="mpunct">⋅⋅⋅</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord cjk_fallback">，</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord cjk_fallback">为</span><span class="mord mathnormal">m</span><span class="mord cjk_fallback">的所有非</span><span class="mord">1</span><span class="mord cjk_fallback">质因数</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord cjk_fallback">，</span><span class="mpunct">⋅⋅⋅</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord cjk_fallback">，</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord cjk_fallback">为</span><span class="mord mathnormal">n</span><span class="mord cjk_fallback">的所有非</span><span class="mord">1</span><span class="mord cjk_fallback">质因数</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord cjk_fallback">则</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel"><span class="mrel"><span class="mord vbox"><span class="thinbox"><span class="rlap"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="inner"><span class="mord"><span class="mrel"></span></span></span><span class="fix"></span></span></span></span></span><span class="mrel">=</span></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">1</span><span class="mord cjk_fallback">，</span><span class="mpunct">⋅⋅⋅,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mpunct">,⋅⋅⋅,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mclose">)</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord cjk_fallback">且</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord cjk_fallback">，</span><span class="mpunct">⋅⋅⋅</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord cjk_fallback">，</span><span class="mpunct">⋅⋅⋅,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord cjk_fallback">为</span><span class="mord mathnormal">mn</span><span class="mord cjk_fallback">的所有质因数</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:8.5998em;vertical-align:-4.0499em;"></span><span class="mord"><span class="mtable"><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:4.5499em;"><span style="top:-6.5499em;"><span class="pstrut" style="height:6.5499em;"></span><span class="mord"><span class="mord"><span class="mtable"><span class="col-align-r"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:4.5499em;"><span style="top:-6.5499em;"><span class="pstrut" style="height:3.8361em;"></span><span class="mord"><span class="mord cjk_fallback">则</span><span class="mord mathnormal">φ</span><span class="mord cjk_fallback">（</span><span class="mord mathnormal">mn</span><span class="mclose">)</span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3.8361em;"></span><span class="mord"></span></span><span style="top:-0.4462em;"><span class="pstrut" style="height:3.8361em;"></span><span class="mord"></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:4.0499em;"><span></span></span></span></span></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:4.5499em;"><span style="top:-6.5499em;"><span class="pstrut" style="height:3.8361em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal">mn</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8361em;"><span style="top:-1.8723em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∏</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2777em;"><span></span></span></span></span></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.836em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord cjk_fallback">）</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.6514em;"><span style="top:-1.8723em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∏</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.4138em;"><span></span></span></span></span></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.9721em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose">)</span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3.8361em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal">m</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8361em;"><span style="top:-1.8723em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∏</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2777em;"><span></span></span></span></span></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.836em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose">)</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.6514em;"><span style="top:-1.8723em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∏</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.4138em;"><span></span></span></span></span></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.9721em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose">)</span></span></span><span style="top:-0.4462em;"><span class="pstrut" style="height:3.8361em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal">φ</span><span class="mord cjk_fallback">（</span><span class="mord mathnormal">m</span><span class="mclose">)</span><span class="mord mathnormal">φ</span><span class="mord cjk_fallback">（</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:4.0499em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:4.0499em;"><span></span></span></span></span></span></span></span></span></span></span></span></p>
+
+                
+              </div>
+            
+            <hr/>
+			
+			<!-- 添加打赏模块 -->
+			<div class="reward-container">
+				 
+					<button id="rewardBtn" class="reward-btn">
+						 
+							❤ 打赏
+						  	
+					</button>
+					<p class="tea">“觉得不错的话，给点打赏吧 ୧(๑•̀⌄•́๑)૭ ”</p>
+					<div id="rewardImgContainer" class="reward-img-container">
+					<div class="singleImgContainer">
+						<img id="wechatImg" class="reward-img" src="/img/wechatpay.jpg" alt="微信二维码">
+						<p class="wechatPay">微信支付</p>
+					</div>
+					<div class="singleImgContainer">
+						<img id="alipayImg" class="reward-img" src="/img/alipay.png" alt="支付宝二维码">
+						<p class="aliPay">支付宝支付</p>
+					</div>
+					</div>
+				
+			</div>
+			
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="category-chain-item">学习笔记</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8A%A0%E5%AF%86/">#加密</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>加密算法</div>
+      <div>https://blog.jishuqin.cn/posts/1f2e3d4c/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>顾梦</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年6月9日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2024年3月27日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/c4d5e6f7/" title="Github首页添加贪吃蛇动画">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Github首页添加贪吃蛇动画</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/7b4c3d1e/" title="软考-软件设计师 笔记">
+                        <span class="hidden-mobile">软考-软件设计师 笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <div id="twikoo"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/twikoo/1.6.8/twikoo.all.min.js', function() {
+        var options = Object.assign(
+          {"envId":"https://twikoo.gumengyo.top/","region":"ap-shanghai","path":"window.location.pathname"},
+          {
+            el: '#twikoo',
+            path: 'window.location.pathname',
+            onCommentLoaded: function() {
+              var imgSelector = '#twikoo .tk-content img:not(.tk-owo-emotion)';
+              Fluid.plugins.imageCaption(imgSelector);
+              Fluid.plugins.fancyBox(imgSelector);
+            }
+          }
+        )
+        twikoo.init(options)
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span class="umami--click--Footer-Hexo">Hexo</span></a> <span class="with-love"><img src="https://cdn.gumengyo.top/duck.gif" alt="" height="35" style="display:inline-block;vertical-align:middle" data-loaded="true" class="lozaded"> </span> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span class="umami--click--Footer-Fluid">Fluid</span></a> <div style="font-size: 0.85rem"> <span>本站由</span> <span class="with-love"><img src="https://cdn.gumengyo.top//qiniuyun.png" alt="" height="35" style="display:inline-block;vertical-align:middle" data-loaded="true" class="lozaded"> </span> <span>提供CDN加速/云存储服务</span> </div> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      粤ICP备2024161578号-1
+    </a>
+  </span>
+  
+    
+      <span>
+        <a
+          href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44050702001273"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="/img/police_beian.png" alt="police-icon"/>
+          
+          <span>粤公网安备44050702001273号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":true,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.gumengyo.top/blog/APlayer.min.js"></script>
+<script src="//cdn.gumengyo.top/blog/Meting.min.js"></script>
+<script src="//cdn.gumengyo.top/blog/wow.min.js"></script>
+<script src="//cdn1.tianli0.top/gh/zhheo/Post-Abstract-AI@0.8/tianli_gpt.js"></script>
+<script src="/js/wow_init.js"></script>
+<script src="/js/reward.js"></script>
+<script src="/js/loading.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script>
+  <link defer rel="stylesheet" href="/styles/backgroundize.css" />
+
+  <!-- 
+    <script 
+	async 
+	defer
+	src="http://cdn.jishuqin.cn/blog/random-string.js" 
+	data-website-id="bb749527-20c3-43b4-86bf-38105b1ebfc6"
+	data-host-url="http://47.115.210.241:3000"
+	data-domains="http://blog.jishuqin.cn/"
+	>
+    </script>
+  -->
+
+  <div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '1s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '2');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --></body>
+</html>
