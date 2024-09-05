@@ -18,16 +18,16 @@
   <meta name="author" content="顾梦">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Github 首页添加贪吃蛇动画  一、前言 动画所需要的代码是运行到Github Actions。 GitHub Actions 是一个用于自动化软件工作流程的平台，包括构建、测试和部署代码。它允许开发人员为软件开发过程的不同阶段创建自定义工作流程，并自动执行重复的任务。GitHub Actions 可以集成到 GitHub 存储库中，并可以被各种事件（如拉取请求、提交和发布）触发。使用 Git">
+    <meta name="description" content="Github 首页添加贪吃蛇动画  一、前言 动画所需要的代码是运行到 Github Actions。 GitHub Actions 是一个用于自动化软件工作流程的平台，包括构建、测试和部署代码。它允许开发人员为软件开发过程的不同阶段创建自定义工作流程，并自动执行重复的任务。GitHub Actions 可以集成到 GitHub 存储库中，并可以被各种事件（如拉取请求、提交和发布）触发。使用 Gi">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Github首页添加贪吃蛇动画">
 <meta property="og:url" content="https://blog.jishuqin.cn/posts/c4d5e6f7/index.html">
 <meta property="og:site_name" content="Gumeng’s blog">
-<meta property="og:description" content="Github 首页添加贪吃蛇动画  一、前言 动画所需要的代码是运行到Github Actions。 GitHub Actions 是一个用于自动化软件工作流程的平台，包括构建、测试和部署代码。它允许开发人员为软件开发过程的不同阶段创建自定义工作流程，并自动执行重复的任务。GitHub Actions 可以集成到 GitHub 存储库中，并可以被各种事件（如拉取请求、提交和发布）触发。使用 Git">
+<meta property="og:description" content="Github 首页添加贪吃蛇动画  一、前言 动画所需要的代码是运行到 Github Actions。 GitHub Actions 是一个用于自动化软件工作流程的平台，包括构建、测试和部署代码。它允许开发人员为软件开发过程的不同阶段创建自定义工作流程，并自动执行重复的任务。GitHub Actions 可以集成到 GitHub 存储库中，并可以被各种事件（如拉取请求、提交和发布）触发。使用 Gi">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.gumengyo.top//202306120013028.png">
-<meta property="article:published_time" content="2023-06-11T23:58:00.000Z">
-<meta property="article:modified_time" content="2024-09-05T08:32:51.113Z">
+<meta property="article:published_time" content="2023-06-11T15:58:00.000Z">
+<meta property="article:modified_time" content="2024-09-05T08:35:10.549Z">
 <meta property="article:author" content="顾梦">
 <meta property="article:tag" content="Github">
 <meta name="twitter:card" content="summary_large_image">
@@ -444,8 +444,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-06-11 23:58" pubdate>
-          2023年6月11日 晚上
+        <time datetime="2023-06-11 15:58" pubdate>
+          2023年6月11日 下午
         </time>
       </span>
     
@@ -456,7 +456,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          1.8k 字
         
       </span>
     
@@ -467,7 +467,7 @@
         
         
         
-          11 分钟
+          16 分钟
         
       </span>
     
@@ -547,7 +547,7 @@
                 <h1>Github 首页添加贪吃蛇动画</h1>
 <p><img src="https://cdn.gumengyo.top//snake.svg" srcset="/img/loading.gif" lazyload alt=""></p>
 <h2 id="一、前言">一、前言</h2>
-<p>动画所需要的代码是运行到<code>Github Actions</code>。</p>
+<p>动画所需要的代码是运行到 <code>Github Actions</code>。</p>
 <p><code>GitHub Actions</code> 是一个用于自动化软件工作流程的平台，包括构建、测试和部署代码。它允许开发人员为软件开发过程的不同阶段创建自定义工作流程，并自动执行重复的任务。<code>GitHub Actions</code> 可以集成到 <code>GitHub</code> 存储库中，并可以被各种事件（如拉取请求、提交和发布）触发。使用 <code>GitHub Actions</code>，开发人员可以轻松协作、减少错误并节省时间。它支持广泛的编程语言，并提供了许多预构建的操作 <code>actions</code>在 <code>GitHub Marketplace</code> 中使用。</p>
 <h2 id="二、创建-Action">二、创建 Action</h2>
 <p class="note note-warning">需在 Github 账户同名的仓库下创建 Action，点击 New workflow -> Configure。</p>
@@ -556,17 +556,19 @@
 <p>点击 Configure 后显示如下界面：</p>
 <p><img src="https://cdn.gumengyo.top//202306120007077.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <h2 id="三、配置脚本">三、配置脚本</h2>
-<p>将下面代码复制粘贴到<code>yml</code>文件中，然后点击<code>Commit changes</code>部署脚本。</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># GitHub Action for generating a contribution graph with a snake eating your contributions.</span><br><br><span class="hljs-attr">name:</span> <span class="hljs-string">Generate</span> <span class="hljs-string">Snake</span><br><br><span class="hljs-attr">on:</span><br>  <span class="hljs-attr">schedule:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">cron:</span> <span class="hljs-string">&quot;0 0 * * *&quot;</span><br>  <span class="hljs-attr">workflow_dispatch:</span><br><br><span class="hljs-attr">jobs:</span><br>  <span class="hljs-attr">build:</span><br>    <span class="hljs-attr">runs-on:</span> <span class="hljs-string">ubuntu-latest</span><br><br>    <span class="hljs-attr">steps:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Checkout</span><br>        <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/checkout@v2.3.4</span><br>      <br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Generate</span> <span class="hljs-string">Snake</span><br>        <span class="hljs-attr">uses:</span> <span class="hljs-string">Platane/snk@master</span><br>        <span class="hljs-attr">id:</span> <span class="hljs-string">snake-gif</span><br>        <span class="hljs-attr">with:</span><br>          <span class="hljs-attr">github_user_name:</span> <span class="hljs-string">$&#123;&#123;</span> <span class="hljs-string">github.repository_owner</span> <span class="hljs-string">&#125;&#125;</span><br>          <span class="hljs-attr">gif_out_path:</span> <span class="hljs-string">./assets/github-contribution-grid-snake.gif</span><br>          <span class="hljs-attr">svg_out_path:</span> <span class="hljs-string">./assets/github-contribution-grid-snake.svg</span><br><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Push</span> <span class="hljs-string">to</span> <span class="hljs-string">GitHub</span><br>        <span class="hljs-attr">uses:</span> <span class="hljs-string">EndBug/add-and-commit@v7.2.1</span><br>        <span class="hljs-attr">with:</span><br>          <span class="hljs-attr">branch:</span> <span class="hljs-string">main</span><br>          <span class="hljs-attr">message:</span> <span class="hljs-string">&#x27;Generate Contribution Snake&#x27;</span><br><br></code></pre></td></tr></table></figure>
+<p>将下面代码复制粘贴到 <code>yml</code>文件中，然后点击 <code>Commit changes</code>部署脚本。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">name:</span> <span class="hljs-string">generate</span> <span class="hljs-string">animation</span><br><br><span class="hljs-attr">on:</span><br>  <span class="hljs-comment"># run automatically every 24 hours</span><br>  <span class="hljs-attr">schedule:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">cron:</span> <span class="hljs-string">&quot;0 */24 * * *&quot;</span> <br>  <br>  <span class="hljs-comment"># allows to manually run the job at any time</span><br>  <span class="hljs-attr">workflow_dispatch:</span><br>  <br>  <span class="hljs-comment"># run on every push on the master branch</span><br>  <span class="hljs-attr">push:</span><br>    <span class="hljs-attr">branches:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-string">main</span><br>  <br>  <br><br><span class="hljs-attr">jobs:</span><br>  <span class="hljs-attr">generate:</span><br>    <span class="hljs-attr">runs-on:</span> <span class="hljs-string">ubuntu-latest</span><br>    <span class="hljs-attr">timeout-minutes:</span> <span class="hljs-number">10</span><br>  <br>    <span class="hljs-attr">steps:</span><br>      <span class="hljs-comment"># generates a snake game from a github user (&lt;github_user_name&gt;) contributions graph, output a svg animation at &lt;svg_out_path&gt;</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">generate</span> <span class="hljs-string">github-contribution-grid-snake.svg</span><br>        <span class="hljs-attr">uses:</span> <span class="hljs-string">Platane/snk/svg-only@v3</span><br>        <span class="hljs-attr">with:</span><br>          <span class="hljs-attr">github_user_name:</span> <span class="hljs-string">$&#123;&#123;</span> <span class="hljs-string">github.repository_owner</span> <span class="hljs-string">&#125;&#125;</span><br>          <span class="hljs-attr">outputs:</span> <span class="hljs-string">|</span><br><span class="hljs-string">            dist/github-contribution-grid-snake.svg</span><br><span class="hljs-string">            dist/github-contribution-grid-snake-dark.svg?palette=github-dark</span><br><span class="hljs-string"></span>        <span class="hljs-attr">env:</span><br>          <span class="hljs-attr">GITHUB_TOKEN:</span> <span class="hljs-string">$&#123;&#123;</span> <span class="hljs-string">secrets.GIT_TOKEN</span> <span class="hljs-string">&#125;&#125;</span><br>  <br>  <br>      <span class="hljs-comment"># push the content of &lt;build_dir&gt; to a branch</span><br>      <span class="hljs-comment"># the content will be available at https://raw.githubusercontent.com/&lt;github_user&gt;/&lt;repository&gt;/&lt;target_branch&gt;/&lt;file&gt; , or as github page</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">push</span> <span class="hljs-string">github-contribution-grid-snake.svg</span> <span class="hljs-string">to</span> <span class="hljs-string">the</span> <span class="hljs-string">output</span> <span class="hljs-string">branch</span><br>        <span class="hljs-attr">uses:</span> <span class="hljs-string">crazy-max/ghaction-github-pages@v3.1.0</span><br>        <span class="hljs-attr">with:</span><br>          <span class="hljs-attr">target_branch:</span> <span class="hljs-string">output</span><br>          <span class="hljs-attr">build_dir:</span> <span class="hljs-string">dist</span><br>        <span class="hljs-attr">env:</span><br>          <span class="hljs-attr">GITHUB_TOKEN:</span> <span class="hljs-string">$&#123;&#123;</span> <span class="hljs-string">secrets.GIT_TOKEN</span> <span class="hljs-string">&#125;&#125;</span><br></code></pre></td></tr></table></figure>
+<p>添加 action secrets  <code>GIT_TOKEN</code> 值填你自己生成的github token</p>
+<p><img src="https://cdn.gumengyo.top/Qexo/24/9/9864ac3c197376e0dfc8ac2936cf867a.png" srcset="/img/loading.gif" lazyload alt="https://cdn.gumengyo.top/Qexo/24/9/9864ac3c197376e0dfc8ac2936cf867a.png"></p>
 <h2 id="四、设置-workflow-权限">四、设置 workflow 权限</h2>
 <p><code>settings</code>-&gt; <code>Actions</code> -&gt; <code>General</code> -&gt; <code>Read and write permissions</code>设置读写权限</p>
 <p><img src="https://cdn.gumengyo.top//image-20230615223425490.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p><img src="https://cdn.gumengyo.top//image-20230615223547928.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <h2 id="五、运行-workflow">五、运行 workflow</h2>
-<p>点击<code>Actions</code>到刚才配置好的<code>workflow</code>，点击<code>Run workflow</code>安全运行脚本。</p>
+<p>点击 <code>Actions</code>到刚才配置好的 <code>workflow</code>，点击 <code>Run workflow</code>安全运行脚本。</p>
 <p><img src="https://cdn.gumengyo.top//202306120005242.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <h2 id="六、引入-svg-动画">六、引入 svg 动画</h2>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">![](https:<span class="hljs-regexp">//</span>raw.githubusercontent.com<span class="hljs-regexp">/你的 GitHub 名/</span>你的 GitHub 名<span class="hljs-regexp">/main/</span>assets/github-contribution-grid-snake.svg)<br></code></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">![](https:<span class="hljs-regexp">//</span>raw.githubusercontent.com<span class="hljs-regexp">/你的 GitHub 名/</span>你的 GitHub 名<span class="hljs-regexp">/output/gi</span>thub-contribution-grid-snake.svg)<br></code></pre></td></tr></table></figure>
 
                 
               </div>
