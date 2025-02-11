@@ -27,7 +27,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.gumengyo.top//blog/img/202401210005189.png">
 <meta property="article:published_time" content="2024-01-20T09:03:00.000Z">
-<meta property="article:modified_time" content="2025-01-14T02:38:33.755Z">
+<meta property="article:modified_time" content="2025-02-11T03:23:50.662Z">
 <meta property="article:author" content="顾梦">
 <meta property="article:tag" content="Hexo">
 <meta property="article:tag" content="Vercel">
@@ -457,7 +457,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.7k 字
+          2k 字
         
       </span>
     
@@ -468,7 +468,7 @@
         
         
         
-          23 分钟
+          17 分钟
         
       </span>
     
@@ -537,7 +537,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2025年1月14日 凌晨
+                    本文最后更新于：2025年2月11日 凌晨
                   
                 
               </p>
@@ -621,18 +621,21 @@
 <p><img src="https://cdn.gumengyo.top//blog/img/202401202342871.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>3.找到 vercel 项目在 Deployments 点击 Redeploy 开始部署, 若没有 Error 信息即可，看到下面这个样子就是部署成功了。</p>
 <p><img src="https://cdn.gumengyo.top//blog/img/202401202343342.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h3 id="本地-docker-部署">本地 docker 部署</h3>
-<p>由于<strong>supabase</strong>数据库的认证方式更改了，所以没办法用vercel的方式，我将 <strong>Qexo</strong> 部署到docker并使用自己服务器上的<code>Mysql</code>。</p>
+<h3 id="本地-docker-compose-部署">本地 docker-compose 部署</h3>
+<p>由于<strong>supabase</strong>数据库的认证方式更改了，所以没办法用vercel的方式，我将 <strong>Qexo</strong> 部署到docker并使用自己服务器上的 <code>Mysql</code>。</p>
+<p>docker-compose.yml：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">version:</span> <span class="hljs-string">&#x27;3.8&#x27;</span><br><br><span class="hljs-attr">services:</span><br>  <span class="hljs-attr">qexo:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">abudulin/qexo:latest</span><br>    <span class="hljs-attr">container_name:</span> <span class="hljs-string">qexo</span><br>    <span class="hljs-attr">restart:</span> <span class="hljs-string">unless-stopped</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;8000:8000&quot;</span><br>    <span class="hljs-attr">environment:</span><br>      <span class="hljs-attr">WORKERS:</span> <span class="hljs-number">4</span><br>      <span class="hljs-attr">THREADS:</span> <span class="hljs-number">4</span><br>      <span class="hljs-attr">TIMEOUT:</span> <span class="hljs-number">600</span><br>      <span class="hljs-attr">MYSQL_HOST:</span>  <span class="hljs-comment"># mysql 地址</span><br>      <span class="hljs-attr">MYSQL_PORT:</span> <span class="hljs-number">3306</span><br>      <span class="hljs-attr">MYSQL_USER:</span>  <span class="hljs-comment"># mysql 用户名</span><br>      <span class="hljs-attr">MYSQL_PASSWORD:</span>  <span class="hljs-comment"># mysql密码</span><br>      <span class="hljs-attr">MYSQL_NAME:</span> <span class="hljs-string">qexo</span> <span class="hljs-comment"># 数据库名</span><br></code></pre></td></tr></table></figure>
+<p>运行命令构建启动：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker-compose up -d<br></code></pre></td></tr></table></figure>
 <ul>
-<li>下载Qexo 项目压缩包上传到服务器 -&gt; <a target="_blank" rel="noopener" href="https://github.com/Qexo/Qexo/releases/tag/3.1.0">https://github.com/Qexo/Qexo/releases/tag/3.1.0</a></li>
-<li>在<code>manage.py</code>的同级目录下创建并修改 <code>configs.py</code>，修改docker file文件内容</li>
+<li><code>docker-compose up -d</code> 会自动检测到镜像更新，并重新创建容器。</li>
+<li><code>-d</code> 参数表示在后台运行容器。</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pymysql<br>pymysql.install_as_MySQLdb()<br>DOMAINS = [<span class="hljs-string">&quot;127.0.0.1&quot;</span>, <span class="hljs-string">&quot;yoursite.com&quot;</span>]<br>DATABASES = &#123;<br>    <span class="hljs-string">&#x27;default&#x27;</span>: &#123;<br>            <span class="hljs-string">&#x27;ENGINE&#x27;</span>: <span class="hljs-string">&#x27;django.db.backends.mysql&#x27;</span>,<br>            <span class="hljs-string">&#x27;NAME&#x27;</span>: <span class="hljs-string">&#x27;qexo&#x27;</span>,<br>            <span class="hljs-string">&#x27;USER&#x27;</span>: <span class="hljs-string">&#x27;root&#x27;</span>,<br>            <span class="hljs-string">&#x27;PASSWORD&#x27;</span>: <span class="hljs-string">&#x27;password&#x27;</span>,<br>            <span class="hljs-string">&#x27;HOST&#x27;</span>: <span class="hljs-string">&#x27;127.0.0.1&#x27;</span>,<br>            <span class="hljs-string">&#x27;PORT&#x27;</span>: <span class="hljs-string">&#x27;3306&#x27;</span>,<br>            <span class="hljs-string">&#x27;OPTIONS&#x27;</span>: &#123;<br>                <span class="hljs-string">&quot;init_command&quot;</span>: <span class="hljs-string">&quot;SET sql_mode=&#x27;STRICT_TRANS_TABLES&#x27;&quot;</span><br>            &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">FROM</span> <span class="hljs-string">python:3.11</span><br><span class="hljs-string">WORKDIR</span> <span class="hljs-string">/root</span><br><span class="hljs-string">COPY</span> <span class="hljs-string">.</span> <span class="hljs-string">.</span><br><br><span class="hljs-string">ARG</span> <span class="hljs-string">CN=true</span><br><span class="hljs-string">RUN</span> <span class="hljs-string">if</span> [ <span class="hljs-string">&quot;$CN&quot;</span> <span class="hljs-string">=</span> <span class="hljs-string">&quot;true&quot;</span> ]<span class="hljs-string">;</span> <span class="hljs-string">then</span> <span class="hljs-string">\</span><br>        <span class="hljs-string">pip</span> <span class="hljs-string">config</span> <span class="hljs-string">set</span> <span class="hljs-string">global.index-url</span> <span class="hljs-string">https://pypi.tuna.tsinghua.edu.cn/simple/</span> <span class="hljs-string">&amp;&amp;</span> <span class="hljs-string">\</span><br>        <span class="hljs-string">pip</span> <span class="hljs-string">config</span> <span class="hljs-string">set</span> <span class="hljs-string">global.trusted-host</span> <span class="hljs-string">pypi.tuna.tsinghua.edu.cn;</span> <span class="hljs-string">\</span><br>    <span class="hljs-string">fi</span><br><br><span class="hljs-string">RUN</span> <span class="hljs-string">python</span> <span class="hljs-string">-m</span> <span class="hljs-string">pip</span> <span class="hljs-string">install</span> <span class="hljs-string">--upgrade</span> <span class="hljs-string">pip</span> <span class="hljs-string">&amp;&amp;</span> <span class="hljs-string">\</span><br>    <span class="hljs-string">pip</span> <span class="hljs-string">install</span> <span class="hljs-string">-r</span> <span class="hljs-string">requirements.txt</span> <span class="hljs-string">&amp;&amp;</span> <span class="hljs-string">\</span><br>    <span class="hljs-string">python3</span> <span class="hljs-string">manage.py</span> <span class="hljs-string">makemigrations</span> <span class="hljs-string">&amp;&amp;</span> <span class="hljs-string">\</span><br>    <span class="hljs-string">python3</span> <span class="hljs-string">manage.py</span> <span class="hljs-string">migrate</span><br><br><span class="hljs-string">EXPOSE</span> <span class="hljs-number">3000 </span><span class="hljs-number">8000</span><br><br><span class="hljs-string">CMD</span> [<span class="hljs-string">&quot;python3&quot;</span>, <span class="hljs-string">&quot;manage.py&quot;</span>, <span class="hljs-string">&quot;runserver&quot;</span>, <span class="hljs-string">&quot;0.0.0.0:8000&quot;</span>, <span class="hljs-string">&quot;--noreload&quot;</span> ] <br></code></pre></td></tr></table></figure>
-<p>构建 docker 镜像</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker build -t qexo:3.1.0 .<br></code></pre></td></tr></table></figure>
-<p>运行容器</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run -d -p 8000:8000 --name qexo qexo:3.1.0<br></code></pre></td></tr></table></figure>
+<p>后续更新：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker-compose pull<br></code></pre></td></tr></table></figure>
+<p>这将尝试拉取 <code>abudulin/qexo:latest</code> 镜像的最新版本。</p>
+<p>重新启动服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker-compose up -d<br></code></pre></td></tr></table></figure>
 <h2 id="3-配置">3.配置</h2>
 <ol>
 <li>点击域名跳转到页面，需要开魔法不然访问不了，或者绑定成自己的域名访问如下操作：</li>
@@ -743,7 +746,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2025年1月14日</div>
+          <div>2025年2月11日</div>
         </div>
       
       
